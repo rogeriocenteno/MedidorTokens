@@ -1,6 +1,6 @@
 # Git_Rotina_Versionamento.md — Rotina Diária de Versionamento
 
-> **Projeto:** MedidorTokens — Extensão Altimeter (Antigravity IDE 2.6.0+)  
+> **Projeto:** MedidorTokens — Extensão MedidorTokens (Antigravity IDE 2.6.0+)  
 > **Repositório:** https://github.com/rogeriocenteno/MedidorTokens (**PÚBLICO**)  
 > **Identidade Git obrigatória:** `Rogério Centeno <rogeriocenteno@users.noreply.github.com>`  
 > **Branch de trabalho:** `develop` (sempre trabalhar nesta branch)  
@@ -44,7 +44,7 @@ git diff --stat --cached
 > Revise a lista de arquivos. Confirme que **nenhum arquivo sensível ou temporário** está incluído e que **não há vazamento de dados privados para o repositório público**:
 > - `credenciais.md` / `.env` — credenciais e variáveis sensíveis
 > - `backup_altimeter_0.0.4/` / `*.bak*` — backups locais incrementais
-> - `altimeter-0.0.4*.vsix` / `altimeter-0.0.5*.vsix` / `altimeter-0.0.6*.vsix` — pacotes legados
+> - `altimeter-*.vsix` / `medidortokens-0.0.*.vsix` — pacotes legados
 > - `Logo*.jpg` / `transcript*.jsonl` / `*.log` — mídias locais e logs de sessão
 > - Caminhos absolutos da máquina local (`C:\Users\<usuario>\...`, drives locais), e-mails pessoais reais ou menções a outros projetos privados
 
@@ -77,7 +77,7 @@ Use sempre um dos prefixos abaixo para identificar o tipo de alteração:
 | `docs:` | Alteração em documentação | `docs: atualiza Inicio.md e LEIA-ME.md com Etapa 12` |
 | `refactor:` | Refatoração sem mudança visível | `refactor: extrai parseResetTime em _autoSyncQuotasFromIDE` |
 | `style:` | Ajuste visual/CSS nos painéis Webview | `style: ajusta espaçamento do botão Auto no painel lateral` |
-| `pkg:` | Atualização de build, `.vsix` ou scripts de empacotamento | `pkg: regera altimeter-0.1.0-agy2.6-fix.vsix após Etapa 12` |
+| `pkg:` | Atualização de build, `.vsix` ou scripts de empacotamento | `pkg: regera medidortokens-0.1.0-agy2.6-fix.vsix após atualização` |
 | `chore:` | Tarefas de manutenção ou configuração | `chore: configura .gitignore para ignorar backups .bak locais` |
 | `plan:` | Atualização de plano/documentação de planejamento | `plan: registra nova etapa no Plano_Melhorias.md` |
 
@@ -85,7 +85,7 @@ Use sempre um dos prefixos abaixo para identificar o tipo de alteração:
 
 ## 🚀 Rotina de Marco Importante (Atualizar `main`)
 
-Execute ao concluir uma etapa validada ou fechar uma nova versão `.vsix` do Altimeter:
+Execute ao concluir uma etapa validada ou fechar uma nova versão `.vsix` do MedidorTokens:
 
 ```powershell
 # 1. Garantir que develop está atualizada e sem arquivos pendentes
@@ -141,7 +141,7 @@ git remote -v
 - **Repositório Público — tolerância zero com dados privados:** nunca commitar caminhos locais absolutos com nome de usuário (`C:\Users\<usuario>\...`), e-mails pessoais (usar sempre `rogeriocenteno@users.noreply.github.com`) nem nomes de outros projetos privados
 - **Nunca commitar `credenciais.md` ou `.env`** — estão protegidos pelo `.gitignore`, mas confirme sempre
 - **Nunca commitar a pasta `backup_altimeter_0.0.4/` nem arquivos `*.bak*`** — os backups locais servem para rollback rápido na máquina, enquanto o histórico completo já fica no Git
-- **Nunca commitar pacotes `.vsix` antigos (`0.0.4` / `0.0.5` / `0.0.6`) nem arquivos `transcript*.jsonl` ou `Logo*.jpg`**
+- **Nunca commitar pacotes `.vsix` antigos (`altimeter-*.vsix`) nem arquivos `transcript*.jsonl` ou `Logo*.jpg`**
 - **SEMPRE validar sintaxe (`node -c`) e sincronizar o `.vsix` (`node gerar_pacote.js`) antes de commitar alterações de código**
 - **SEMPRE executar a auditoria pré-commit e `git diff --stat --cached` antes de `git commit`** para confirmar visualmente o que será versionado
 
@@ -162,7 +162,7 @@ Sempre execute na pasta raiz do projeto (`<pasta-do-projeto>`):
 # 1. Validar sintaxe do código principal
 node -c "./dist_altimeter_corrigido/extension.js"
 
-# 2. Sincronizar com a IDE e atualizar altimeter-0.1.0-agy2.6-fix.vsix
+# 2. Sincronizar com a IDE e atualizar medidortokens-0.1.0-agy2.6-fix.vsix
 node "./gerar_pacote.js"
 ```
 

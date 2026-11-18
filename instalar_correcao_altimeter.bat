@@ -1,7 +1,7 @@
 @echo off
 chcp 65001 >nul
 echo ============================================================================
-echo   Instalador da Correcao do Altimeter para Antigravity IDE 2.6.0+
+echo   Instalador do MedidorTokens para Antigravity IDE 2.6.0+
 echo   Data: 18/11/2026 - Versao: 0.1.0 - Autor: Rogerio Centeno
 echo ============================================================================
 echo.
@@ -17,9 +17,9 @@ if not exist "%ORIGEM%" (
 )
 
 set "ENCONTRADO=0"
-for /d %%D in ("%EXT_BASE%\rogeriocenteno.altimeter-*" "%EXT_BASE%\pqub.altimeter-*") do (
+for /d %%D in ("%EXT_BASE%\rogeriocenteno.medidortokens-*" "%EXT_BASE%\rogeriocenteno.altimeter-*" "%EXT_BASE%\pqub.altimeter-*") do (
     set "ENCONTRADO=1"
-    echo Encontrada instalacao do Altimeter em:
+    echo Encontrada instalacao do MedidorTokens em:
     echo   %%D
     if not exist "%%D\dist\extension.js.original.bak" (
         copy /Y "%%D\dist\extension.js" "%%D\dist\extension.js.original.bak" >nul
@@ -31,10 +31,10 @@ for /d %%D in ("%EXT_BASE%\rogeriocenteno.altimeter-*" "%EXT_BASE%\pqub.altimete
 )
 
 if "%ENCONTRADO%"=="0" (
-    echo [AVISO] Nenhuma pasta rogeriocenteno.altimeter-* ou pqub.altimeter-* foi encontrada em:
+    echo [AVISO] Nenhuma pasta rogeriocenteno.medidortokens-* foi encontrada em:
     echo   "%EXT_BASE%"
     echo Voce pode instalar diretamente o pacote .vsix pelo Antigravity IDE:
-    echo   Ctrl+Shift+X -^> menu "..." -^> Install from VSIX... -^> altimeter-0.1.0-agy2.6-fix.vsix
+    echo   Ctrl+Shift+X -^> menu "..." -^> Install from VSIX... -^> medidortokens-0.1.0-agy2.6-fix.vsix
 ) else (
     echo ============================================================================
     echo   Concluido! Agora no Antigravity IDE pressione Ctrl+Shift+P e execute:

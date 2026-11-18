@@ -25,11 +25,10 @@ PRE_RESTORE_*
 
 # -----------------------------------------------------------
 # PACOTES ANTIGOS E COMPACTADOS LEGADOS
-# (O pacote oficial atual altimeter-0.1.0-agy2.6-fix.vsix É versionado)
+# (O pacote oficial atual medidortokens-0.1.0-agy2.6-fix.vsix É versionado)
 # -----------------------------------------------------------
-altimeter-0.0.4*.vsix
-altimeter-0.0.5*.vsix
-altimeter-0.0.6*.vsix
+altimeter-*.vsix
+medidortokens-0.0.*.vsix
 *.zip
 
 # -----------------------------------------------------------

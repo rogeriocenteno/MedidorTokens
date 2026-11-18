@@ -15,7 +15,7 @@
 		return this.inspectOpts.colors = this.useColors, Yt.inspect(t, this.inspectOpts).split(`
 `).map(e => e.trim()).join(" ")
 	}; ws.O = function (t) { return this.inspectOpts.colors = this.useColors, Yt.inspect(t, this.inspectOpts) }
-}); var Es = g((Vm, Ka) => { typeof process > "u" || process.type === "renderer" || process.browser === !0 || process.__nwjs ? Ka.exports = xs() : Ka.exports = Ss() }); var _s = g((Jm, Cs) => { var bt; Cs.exports = function () { if (!bt) { try { bt = Es()("follow-redirects") } catch { } typeof bt != "function" && (bt = function () { }) } bt.apply(null, arguments) } }); var Os = g((Km, cn) => { var yt = require("url"), gt = yt.URL, ql = require("http"), Ul = require("https"), en = require("stream").Writable, tn = require("assert"), ks = _s(); (function () { var e = typeof process < "u", a = typeof window < "u" && typeof document < "u", n = Ae(Error.captureStackTrace); !e && (a || !n) && console.warn("The follow-redirects package should be excluded from browser builds.") })(); var an = !1; try { tn(new gt("")) } catch (t) { an = t.code === "ERR_INVALID_URL" } var Bl = ["auth", "host", "hostname", "href", "path", "pathname", "port", "protocol", "query", "search", "hash"], nn = ["abort", "aborted", "connect", "error", "socket", "timeout"], on = Object.create(null); nn.forEach(function (t) { on[t] = function (e, a, n) { this._redirectable.emit(t, e, a, n) } }); var Xa = wt("ERR_INVALID_URL", "Invalid URL", TypeError), Qa = wt("ERR_FR_REDIRECTION_FAILURE", "Redirected request failed"), Ml = wt("ERR_FR_TOO_MANY_REDIRECTS", "Maximum number of redirects exceeded", Qa), zl = wt("ERR_FR_MAX_BODY_LENGTH_EXCEEDED", "Request body larger than maxBodyLength limit"), Hl = wt("ERR_STREAM_WRITE_AFTER_END", "write after end"), $l = en.prototype.destroy || Rs; function X(t, e) { en.call(this), this._sanitizeOptions(t), this._options = t, this._ended = !1, this._ending = !1, this._redirectCount = 0, this._redirects = [], this._requestBodyLength = 0, this._requestBodyBuffers = [], e && this.on("response", e); var a = this; this._onNativeResponse = function (n) { try { a._processResponse(n) } catch (i) { a.emit("error", i instanceof Qa ? i : new Qa({ cause: i })) } }, this._performRequest() } X.prototype = Object.create(en.prototype); X.prototype.abort = function () { rn(this._currentRequest), this._currentRequest.abort(), this.emit("abort") }; X.prototype.destroy = function (t) { return rn(this._currentRequest, t), $l.call(this, t), this }; X.prototype.write = function (t, e, a) { if (this._ending) throw new Hl; if (!Re(t) && !Vl(t)) throw new TypeError("data should be a string, Buffer or Uint8Array"); if (Ae(e) && (a = e, e = null), t.length === 0) { a && a(); return } this._requestBodyLength + t.length <= this._options.maxBodyLength ? (this._requestBodyLength += t.length, this._requestBodyBuffers.push({ data: t, encoding: e }), this._currentRequest.write(t, e, a)) : (this.emit("error", new zl), this.abort()) }; X.prototype.end = function (t, e, a) { if (Ae(t) ? (a = t, t = e = null) : Ae(e) && (a = e, e = null), !t) this._ended = this._ending = !0, this._currentRequest.end(null, null, a); else { var n = this, i = this._currentRequest; this.write(t, e, function () { n._ended = !0, i.end(null, null, a) }), this._ending = !0 } }; X.prototype.setHeader = function (t, e) { this._options.headers[t] = e, this._currentRequest.setHeader(t, e) }; X.prototype.removeHeader = function (t) { delete this._options.headers[t], this._currentRequest.removeHeader(t) }; X.prototype.setTimeout = function (t, e) { var a = this; function n(s) { s.setTimeout(t), s.removeListener("timeout", s.destroy), s.addListener("timeout", s.destroy) } function i(s) { a._timeout && clearTimeout(a._timeout), a._timeout = setTimeout(function () { a.emit("timeout"), o() }, t), n(s) } function o() { a._timeout && (clearTimeout(a._timeout), a._timeout = null), a.removeListener("abort", o), a.removeListener("error", o), a.removeListener("response", o), a.removeListener("close", o), e && a.removeListener("timeout", e), a.socket || a._currentRequest.removeListener("socket", i) } return e && this.on("timeout", e), this.socket ? i(this.socket) : this._currentRequest.once("socket", i), this.on("socket", n), this.on("abort", o), this.on("error", o), this.on("response", o), this.on("close", o), this };["flushHeaders", "getHeader", "setNoDelay", "setSocketKeepAlive"].forEach(function (t) { X.prototype[t] = function (e, a) { return this._currentRequest[t](e, a) } });["aborted", "connection", "socket"].forEach(function (t) { Object.defineProperty(X.prototype, t, { get: function () { return this._currentRequest[t] } }) }); X.prototype._sanitizeOptions = function (t) { if (t.headers || (t.headers = {}), t.host && (t.hostname || (t.hostname = t.host), delete t.host), !t.pathname && t.path) { var e = t.path.indexOf("?"); e < 0 ? t.pathname = t.path : (t.pathname = t.path.substring(0, e), t.search = t.path.substring(e)) } }; X.prototype._performRequest = function () { var t = this._options.protocol, e = this._options.nativeProtocols[t]; if (!e) throw new TypeError("Unsupported protocol " + t); if (this._options.agents) { var a = t.slice(0, -1); this._options.agent = this._options.agents[a] } var n = this._currentRequest = e.request(this._options, this._onNativeResponse); n._redirectable = this; for (var i of nn) n.on(i, on[i]); if (this._currentUrl = /^\//.test(this._options.path) ? yt.format(this._options) : this._options.path, this._isRedirect) { var o = 0, s = this, r = this._requestBodyBuffers; (function u(l) { if (n === s._currentRequest) if (l) s.emit("error", l); else if (o < r.length) { var c = r[o++]; n.finished || n.write(c.data, c.encoding, u) } else s._ended && n.end() })() } }; X.prototype._processResponse = function (t) { var e = t.statusCode; this._options.trackRedirects && this._redirects.push({ url: this._currentUrl, headers: t.headers, statusCode: e }); var a = t.headers.location; if (!a || this._options.followRedirects === !1 || e < 300 || e >= 400) { t.responseUrl = this._currentUrl, t.redirects = this._redirects, this.emit("response", t), this._requestBodyBuffers = []; return } if (rn(this._currentRequest), t.destroy(), ++this._redirectCount > this._options.maxRedirects) throw new Ml; var n, i = this._options.beforeRedirect; i && (n = Object.assign({ Host: t.req.getHeader("host") }, this._options.headers)); var o = this._options.method; ((e === 301 || e === 302) && this._options.method === "POST" || e === 303 && !/^(?:GET|HEAD)$/.test(this._options.method)) && (this._options.method = "GET", this._requestBodyBuffers = [], Ya(/^content-/i, this._options.headers)); var s = Ya(/^host$/i, this._options.headers), r = sn(this._currentUrl), u = s || r.host, l = /^\w+:/.test(a) ? this._currentUrl : yt.format(Object.assign(r, { host: u })), c = Gl(a, l); if (ks("redirecting to", c.href), this._isRedirect = !0, Za(c, this._options), (c.protocol !== r.protocol && c.protocol !== "https:" || c.host !== u && !Wl(c.host, u)) && Ya(/^(?:(?:proxy-)?authorization|cookie)$/i, this._options.headers), Ae(i)) { var d = { headers: t.headers, statusCode: e }, m = { url: l, method: o, headers: n }; i(this._options, d, m), this._sanitizeOptions(this._options) } this._performRequest() }; function Ts(t) { var e = { maxRedirects: 21, maxBodyLength: 10485760 }, a = {}; return Object.keys(t).forEach(function (n) { var i = n + ":", o = a[i] = t[n], s = e[n] = Object.create(o); function r(l, c, d) { return Jl(l) ? l = Za(l) : Re(l) ? l = Za(sn(l)) : (d = c, c = As(l), l = { protocol: i }), Ae(c) && (d = c, c = null), c = Object.assign({ maxRedirects: e.maxRedirects, maxBodyLength: e.maxBodyLength }, l, c), c.nativeProtocols = a, !Re(c.host) && !Re(c.hostname) && (c.hostname = "::1"), tn.equal(c.protocol, i, "protocol mismatch"), ks("options", c), new X(c, d) } function u(l, c, d) { var m = s.request(l, c, d); return m.end(), m } Object.defineProperties(s, { request: { value: r, configurable: !0, enumerable: !0, writable: !0 }, get: { value: u, configurable: !0, enumerable: !0, writable: !0 } }) }), e } function Rs() { } function sn(t) { var e; if (an) e = new gt(t); else if (e = As(yt.parse(t)), !Re(e.protocol)) throw new Xa({ input: t }); return e } function Gl(t, e) { return an ? new gt(t, e) : sn(yt.resolve(e, t)) } function As(t) { if (/^\[/.test(t.hostname) && !/^\[[:0-9a-f]+\]$/i.test(t.hostname)) throw new Xa({ input: t.href || t }); if (/^\[/.test(t.host) && !/^\[[:0-9a-f]+\](:\d+)?$/i.test(t.host)) throw new Xa({ input: t.href || t }); return t } function Za(t, e) { var a = e || {}; for (var n of Bl) a[n] = t[n]; return a.hostname.startsWith("[") && (a.hostname = a.hostname.slice(1, -1)), a.port !== "" && (a.port = Number(a.port)), a.path = a.search ? a.pathname + a.search : a.pathname, a } function Ya(t, e) { var a; for (var n in e) t.test(n) && (a = e[n], delete e[n]); return a === null || typeof a > "u" ? void 0 : String(a).trim() } function wt(t, e, a) { function n(i) { Ae(Error.captureStackTrace) && Error.captureStackTrace(this, this.constructor), Object.assign(this, i || {}), this.code = t, this.message = this.cause ? e + ": " + this.cause.message : e } return n.prototype = new (a || Error), Object.defineProperties(n.prototype, { constructor: { value: n, enumerable: !1 }, name: { value: "Error [" + t + "]", enumerable: !1 } }), n } function rn(t, e) { for (var a of nn) t.removeListener(a, on[a]); t.on("error", Rs), t.destroy(e) } function Wl(t, e) { tn(Re(t) && Re(e)); var a = t.length - e.length - 1; return a > 0 && t[a] === "." && t.endsWith(e) } function Re(t) { return typeof t == "string" || t instanceof String } function Ae(t) { return typeof t == "function" } function Vl(t) { return typeof t == "object" && "length" in t } function Jl(t) { return gt && t instanceof gt } cn.exports = Ts({ http: ql, https: Ul }); cn.exports.wrap = Ts }); var Ou = {}; On(Ou, { activate: () => Ru, deactivate: () => Au }); module.exports = Sr(Ou); var Q = L(require("vscode")); var In = require("child_process"), Dn = require("util"), Fn = L(require("https")), be = L(require("process")); var da = class { constructor() { this.outputChannel = null; this.logLevel = 1 } init() { try { let e = require("vscode"); this.outputChannel = e.window.createOutputChannel("Altimeter") } catch { } } log(e, a, n) { if (e < this.logLevel) return; let o = `[${new Date().toISOString()}] [${a}] ${n}`; this.outputChannel?.appendLine(o), console.log(o) } debug(e) { this.log(0, "DEBUG", e) } info(e) { this.log(1, "INFO", e) } warn(e) { this.log(2, "WARN", e) } error(e) { this.log(3, "ERROR", e) } }, T = new da; var Pn = L(require("process")), Ie = class { isAntigravityProcess(e) { return !e.includes("--extension_server_port") || !e.includes("--csrf_token") ? !1 : /--app_data_dir\s+antigravity\b/i.test(e) } getProcessListCommand(e) { return `chcp 65001 >nul && powershell -NoProfile -Command "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; Get-CimInstance Win32_Process -Filter 'name=''${e}''' | Select-Object ProcessId,CommandLine | ConvertTo-Json"` } getProcessByKeywordCommand() { return `chcp 65001 >nul && powershell -NoProfile -Command "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'csrf_token' } | Select-Object ProcessId,Name,CommandLine | ConvertTo-Json"` } parseProcessInfo(e) { T.debug("[WindowsStrategy] Parsing JSON process info..."); try { let a = e.indexOf("["), n = e.indexOf("{"), i = e; if (a >= 0 || n >= 0) { let r = a >= 0 && n >= 0 ? Math.min(a, n) : Math.max(a, n); i = e.substring(r) } let o = JSON.parse(i.trim()); if (Array.isArray(o) || (o = [o]), o.length === 0) return []; let s = []; for (let r of o) { let u = r.CommandLine || ""; if (!u || !this.isAntigravityProcess(u)) continue; let l = r.ProcessId; if (!l) continue; let c = u.match(/--extension_server_port[=\s]+(\d+)/), d = u.match(/--csrf_token[=\s]+([a-f0-9-]+)/i); if (!d?.[1]) continue; let m = c?.[1] ? parseInt(c[1], 10) : 0, v = d[1]; s.push({ pid: l, extensionPort: m, csrfToken: v }) } return s } catch { return [] } } getPortListCommand(e) { return `chcp 65001 >nul && powershell -NoProfile -NonInteractive -Command "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $ports = Get-NetTCPConnection -State Listen -OwningProcess ${e} -ErrorAction SilentlyContinue | Select-Object -ExpandProperty LocalPort; if ($ports) { $ports | Sort-Object -Unique }"` } parseListeningPorts(e) { let a = new Set, n = e.match(/\b\d{1,5}\b/g) || []; for (let i of n) { let o = parseInt(i, 10); o > 0 && o <= 65535 && a.add(o) } return Array.from(a).sort((i, o) => i - o) } getErrorMessages() { return { processNotFound: "language_server process not found", commandNotAvailable: "PowerShell command failed", requirements: ["Antigravity running", "language_server_windows_x64 running"] } } getDiagnosticCommand() { return `powershell -NoProfile -Command "Get-Process | Where-Object { $_.ProcessName -match 'language|antigravity' } | Select-Object Id,ProcessName,Path | Format-Table -AutoSize"` } }, De = class {
+}); var Es = g((Vm, Ka) => { typeof process > "u" || process.type === "renderer" || process.browser === !0 || process.__nwjs ? Ka.exports = xs() : Ka.exports = Ss() }); var _s = g((Jm, Cs) => { var bt; Cs.exports = function () { if (!bt) { try { bt = Es()("follow-redirects") } catch { } typeof bt != "function" && (bt = function () { }) } bt.apply(null, arguments) } }); var Os = g((Km, cn) => { var yt = require("url"), gt = yt.URL, ql = require("http"), Ul = require("https"), en = require("stream").Writable, tn = require("assert"), ks = _s(); (function () { var e = typeof process < "u", a = typeof window < "u" && typeof document < "u", n = Ae(Error.captureStackTrace); !e && (a || !n) && console.warn("The follow-redirects package should be excluded from browser builds.") })(); var an = !1; try { tn(new gt("")) } catch (t) { an = t.code === "ERR_INVALID_URL" } var Bl = ["auth", "host", "hostname", "href", "path", "pathname", "port", "protocol", "query", "search", "hash"], nn = ["abort", "aborted", "connect", "error", "socket", "timeout"], on = Object.create(null); nn.forEach(function (t) { on[t] = function (e, a, n) { this._redirectable.emit(t, e, a, n) } }); var Xa = wt("ERR_INVALID_URL", "Invalid URL", TypeError), Qa = wt("ERR_FR_REDIRECTION_FAILURE", "Redirected request failed"), Ml = wt("ERR_FR_TOO_MANY_REDIRECTS", "Maximum number of redirects exceeded", Qa), zl = wt("ERR_FR_MAX_BODY_LENGTH_EXCEEDED", "Request body larger than maxBodyLength limit"), Hl = wt("ERR_STREAM_WRITE_AFTER_END", "write after end"), $l = en.prototype.destroy || Rs; function X(t, e) { en.call(this), this._sanitizeOptions(t), this._options = t, this._ended = !1, this._ending = !1, this._redirectCount = 0, this._redirects = [], this._requestBodyLength = 0, this._requestBodyBuffers = [], e && this.on("response", e); var a = this; this._onNativeResponse = function (n) { try { a._processResponse(n) } catch (i) { a.emit("error", i instanceof Qa ? i : new Qa({ cause: i })) } }, this._performRequest() } X.prototype = Object.create(en.prototype); X.prototype.abort = function () { rn(this._currentRequest), this._currentRequest.abort(), this.emit("abort") }; X.prototype.destroy = function (t) { return rn(this._currentRequest, t), $l.call(this, t), this }; X.prototype.write = function (t, e, a) { if (this._ending) throw new Hl; if (!Re(t) && !Vl(t)) throw new TypeError("data should be a string, Buffer or Uint8Array"); if (Ae(e) && (a = e, e = null), t.length === 0) { a && a(); return } this._requestBodyLength + t.length <= this._options.maxBodyLength ? (this._requestBodyLength += t.length, this._requestBodyBuffers.push({ data: t, encoding: e }), this._currentRequest.write(t, e, a)) : (this.emit("error", new zl), this.abort()) }; X.prototype.end = function (t, e, a) { if (Ae(t) ? (a = t, t = e = null) : Ae(e) && (a = e, e = null), !t) this._ended = this._ending = !0, this._currentRequest.end(null, null, a); else { var n = this, i = this._currentRequest; this.write(t, e, function () { n._ended = !0, i.end(null, null, a) }), this._ending = !0 } }; X.prototype.setHeader = function (t, e) { this._options.headers[t] = e, this._currentRequest.setHeader(t, e) }; X.prototype.removeHeader = function (t) { delete this._options.headers[t], this._currentRequest.removeHeader(t) }; X.prototype.setTimeout = function (t, e) { var a = this; function n(s) { s.setTimeout(t), s.removeListener("timeout", s.destroy), s.addListener("timeout", s.destroy) } function i(s) { a._timeout && clearTimeout(a._timeout), a._timeout = setTimeout(function () { a.emit("timeout"), o() }, t), n(s) } function o() { a._timeout && (clearTimeout(a._timeout), a._timeout = null), a.removeListener("abort", o), a.removeListener("error", o), a.removeListener("response", o), a.removeListener("close", o), e && a.removeListener("timeout", e), a.socket || a._currentRequest.removeListener("socket", i) } return e && this.on("timeout", e), this.socket ? i(this.socket) : this._currentRequest.once("socket", i), this.on("socket", n), this.on("abort", o), this.on("error", o), this.on("response", o), this.on("close", o), this };["flushHeaders", "getHeader", "setNoDelay", "setSocketKeepAlive"].forEach(function (t) { X.prototype[t] = function (e, a) { return this._currentRequest[t](e, a) } });["aborted", "connection", "socket"].forEach(function (t) { Object.defineProperty(X.prototype, t, { get: function () { return this._currentRequest[t] } }) }); X.prototype._sanitizeOptions = function (t) { if (t.headers || (t.headers = {}), t.host && (t.hostname || (t.hostname = t.host), delete t.host), !t.pathname && t.path) { var e = t.path.indexOf("?"); e < 0 ? t.pathname = t.path : (t.pathname = t.path.substring(0, e), t.search = t.path.substring(e)) } }; X.prototype._performRequest = function () { var t = this._options.protocol, e = this._options.nativeProtocols[t]; if (!e) throw new TypeError("Unsupported protocol " + t); if (this._options.agents) { var a = t.slice(0, -1); this._options.agent = this._options.agents[a] } var n = this._currentRequest = e.request(this._options, this._onNativeResponse); n._redirectable = this; for (var i of nn) n.on(i, on[i]); if (this._currentUrl = /^\//.test(this._options.path) ? yt.format(this._options) : this._options.path, this._isRedirect) { var o = 0, s = this, r = this._requestBodyBuffers; (function u(l) { if (n === s._currentRequest) if (l) s.emit("error", l); else if (o < r.length) { var c = r[o++]; n.finished || n.write(c.data, c.encoding, u) } else s._ended && n.end() })() } }; X.prototype._processResponse = function (t) { var e = t.statusCode; this._options.trackRedirects && this._redirects.push({ url: this._currentUrl, headers: t.headers, statusCode: e }); var a = t.headers.location; if (!a || this._options.followRedirects === !1 || e < 300 || e >= 400) { t.responseUrl = this._currentUrl, t.redirects = this._redirects, this.emit("response", t), this._requestBodyBuffers = []; return } if (rn(this._currentRequest), t.destroy(), ++this._redirectCount > this._options.maxRedirects) throw new Ml; var n, i = this._options.beforeRedirect; i && (n = Object.assign({ Host: t.req.getHeader("host") }, this._options.headers)); var o = this._options.method; ((e === 301 || e === 302) && this._options.method === "POST" || e === 303 && !/^(?:GET|HEAD)$/.test(this._options.method)) && (this._options.method = "GET", this._requestBodyBuffers = [], Ya(/^content-/i, this._options.headers)); var s = Ya(/^host$/i, this._options.headers), r = sn(this._currentUrl), u = s || r.host, l = /^\w+:/.test(a) ? this._currentUrl : yt.format(Object.assign(r, { host: u })), c = Gl(a, l); if (ks("redirecting to", c.href), this._isRedirect = !0, Za(c, this._options), (c.protocol !== r.protocol && c.protocol !== "https:" || c.host !== u && !Wl(c.host, u)) && Ya(/^(?:(?:proxy-)?authorization|cookie)$/i, this._options.headers), Ae(i)) { var d = { headers: t.headers, statusCode: e }, m = { url: l, method: o, headers: n }; i(this._options, d, m), this._sanitizeOptions(this._options) } this._performRequest() }; function Ts(t) { var e = { maxRedirects: 21, maxBodyLength: 10485760 }, a = {}; return Object.keys(t).forEach(function (n) { var i = n + ":", o = a[i] = t[n], s = e[n] = Object.create(o); function r(l, c, d) { return Jl(l) ? l = Za(l) : Re(l) ? l = Za(sn(l)) : (d = c, c = As(l), l = { protocol: i }), Ae(c) && (d = c, c = null), c = Object.assign({ maxRedirects: e.maxRedirects, maxBodyLength: e.maxBodyLength }, l, c), c.nativeProtocols = a, !Re(c.host) && !Re(c.hostname) && (c.hostname = "::1"), tn.equal(c.protocol, i, "protocol mismatch"), ks("options", c), new X(c, d) } function u(l, c, d) { var m = s.request(l, c, d); return m.end(), m } Object.defineProperties(s, { request: { value: r, configurable: !0, enumerable: !0, writable: !0 }, get: { value: u, configurable: !0, enumerable: !0, writable: !0 } }) }), e } function Rs() { } function sn(t) { var e; if (an) e = new gt(t); else if (e = As(yt.parse(t)), !Re(e.protocol)) throw new Xa({ input: t }); return e } function Gl(t, e) { return an ? new gt(t, e) : sn(yt.resolve(e, t)) } function As(t) { if (/^\[/.test(t.hostname) && !/^\[[:0-9a-f]+\]$/i.test(t.hostname)) throw new Xa({ input: t.href || t }); if (/^\[/.test(t.host) && !/^\[[:0-9a-f]+\](:\d+)?$/i.test(t.host)) throw new Xa({ input: t.href || t }); return t } function Za(t, e) { var a = e || {}; for (var n of Bl) a[n] = t[n]; return a.hostname.startsWith("[") && (a.hostname = a.hostname.slice(1, -1)), a.port !== "" && (a.port = Number(a.port)), a.path = a.search ? a.pathname + a.search : a.pathname, a } function Ya(t, e) { var a; for (var n in e) t.test(n) && (a = e[n], delete e[n]); return a === null || typeof a > "u" ? void 0 : String(a).trim() } function wt(t, e, a) { function n(i) { Ae(Error.captureStackTrace) && Error.captureStackTrace(this, this.constructor), Object.assign(this, i || {}), this.code = t, this.message = this.cause ? e + ": " + this.cause.message : e } return n.prototype = new (a || Error), Object.defineProperties(n.prototype, { constructor: { value: n, enumerable: !1 }, name: { value: "Error [" + t + "]", enumerable: !1 } }), n } function rn(t, e) { for (var a of nn) t.removeListener(a, on[a]); t.on("error", Rs), t.destroy(e) } function Wl(t, e) { tn(Re(t) && Re(e)); var a = t.length - e.length - 1; return a > 0 && t[a] === "." && t.endsWith(e) } function Re(t) { return typeof t == "string" || t instanceof String } function Ae(t) { return typeof t == "function" } function Vl(t) { return typeof t == "object" && "length" in t } function Jl(t) { return gt && t instanceof gt } cn.exports = Ts({ http: ql, https: Ul }); cn.exports.wrap = Ts }); var Ou = {}; On(Ou, { activate: () => Ru, deactivate: () => Au }); module.exports = Sr(Ou); var Q = L(require("vscode")); var In = require("child_process"), Dn = require("util"), Fn = L(require("https")), be = L(require("process")); var da = class { constructor() { this.outputChannel = null; this.logLevel = 1 } init() { try { let e = require("vscode"); this.outputChannel = e.window.createOutputChannel("MedidorTokens") } catch { } } log(e, a, n) { if (e < this.logLevel) return; let o = `[${new Date().toISOString()}] [${a}] ${n}`; this.outputChannel?.appendLine(o), console.log(o) } debug(e) { this.log(0, "DEBUG", e) } info(e) { this.log(1, "INFO", e) } warn(e) { this.log(2, "WARN", e) } error(e) { this.log(3, "ERROR", e) } }, T = new da; var Pn = L(require("process")), Ie = class { isAntigravityProcess(e) { return !e.includes("--extension_server_port") || !e.includes("--csrf_token") ? !1 : /--app_data_dir\s+antigravity\b/i.test(e) } getProcessListCommand(e) { return `chcp 65001 >nul && powershell -NoProfile -Command "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; Get-CimInstance Win32_Process -Filter 'name=''${e}''' | Select-Object ProcessId,CommandLine | ConvertTo-Json"` } getProcessByKeywordCommand() { return `chcp 65001 >nul && powershell -NoProfile -Command "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'csrf_token' } | Select-Object ProcessId,Name,CommandLine | ConvertTo-Json"` } parseProcessInfo(e) { T.debug("[WindowsStrategy] Parsing JSON process info..."); try { let a = e.indexOf("["), n = e.indexOf("{"), i = e; if (a >= 0 || n >= 0) { let r = a >= 0 && n >= 0 ? Math.min(a, n) : Math.max(a, n); i = e.substring(r) } let o = JSON.parse(i.trim()); if (Array.isArray(o) || (o = [o]), o.length === 0) return []; let s = []; for (let r of o) { let u = r.CommandLine || ""; if (!u || !this.isAntigravityProcess(u)) continue; let l = r.ProcessId; if (!l) continue; let c = u.match(/--extension_server_port[=\s]+(\d+)/), d = u.match(/--csrf_token[=\s]+([a-f0-9-]+)/i); if (!d?.[1]) continue; let m = c?.[1] ? parseInt(c[1], 10) : 0, v = d[1]; s.push({ pid: l, extensionPort: m, csrfToken: v }) } return s } catch { return [] } } getPortListCommand(e) { return `chcp 65001 >nul && powershell -NoProfile -NonInteractive -Command "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $ports = Get-NetTCPConnection -State Listen -OwningProcess ${e} -ErrorAction SilentlyContinue | Select-Object -ExpandProperty LocalPort; if ($ports) { $ports | Sort-Object -Unique }"` } parseListeningPorts(e) { let a = new Set, n = e.match(/\b\d{1,5}\b/g) || []; for (let i of n) { let o = parseInt(i, 10); o > 0 && o <= 65535 && a.add(o) } return Array.from(a).sort((i, o) => i - o) } getErrorMessages() { return { processNotFound: "language_server process not found", commandNotAvailable: "PowerShell command failed", requirements: ["Antigravity running", "language_server_windows_x64 running"] } } getDiagnosticCommand() { return `powershell -NoProfile -Command "Get-Process | Where-Object { $_.ProcessName -match 'language|antigravity' } | Select-Object Id,ProcessName,Path | Format-Table -AutoSize"` } }, De = class {
 	constructor(e) { this.availablePortCommand = null; this.portCommandChecked = !1; this.targetPid = 0; this.platform = e } async detectAvailablePortCommand() { if (!this.portCommandChecked) { this.portCommandChecked = !0; try { let { exec: e } = await import("child_process"), { promisify: a } = await import("util"), n = a(e), i = ["lsof", "ss", "netstat"]; for (let o of i) try { await n(`which ${o}`, { timeout: 3e3 }), this.availablePortCommand = o; return } catch { } } catch { } } } isAntigravityProcess(e) { return !e.includes("--extension_server_port") || !e.includes("--csrf_token") ? !1 : /--app_data_dir\s+antigravity\b/i.test(e) } getProcessListCommand(e) { return `ps -ww -eo pid,ppid,args | grep "${e}" | grep -v grep` } parseProcessInfo(e) {
 		let a = e.split(`
 `).filter(o => o.trim()), n = Pn.pid, i = []; for (let o of a) { let s = o.trim().split(/\s+/); if (s.length < 3) continue; let r = parseInt(s[0], 10), u = parseInt(s[1], 10), l = s.slice(2).join(" "); if (isNaN(r)) continue; let c = l.match(/--extension_server_port[=\s]+(\d+)/), d = l.match(/--csrf_token[=\s]+([a-zA-Z0-9-]+)/i); if (d?.[1] && this.isAntigravityProcess(l)) { let m = c?.[1] ? parseInt(c[1], 10) : 0, v = d[1]; i.push({ pid: r, ppid: u, extensionPort: m, csrfToken: v }) } } return i.sort((o, s) => o.ppid === n ? -1 : s.ppid === n ? 1 : 0)
@@ -98,7 +98,7 @@ ${a}`)
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="Content-Security-Policy" content="{{ csp }}" />
-		<title>Altimeter Statistics</title>
+		<title>Estatísticas do MedidorTokens</title>
 		<script src="{{ chartJsUri }}"></script>
 		<style>
 			body {
@@ -456,7 +456,7 @@ ${a}`)
 				var a = document.createElement('a');
 				var now = new Date();
 				var pad = function(n) { return String(n).padStart(2, '0'); };
-				var fname = 'altimeter_tokens_' + now.getFullYear() + pad(now.getMonth() + 1) + pad(now.getDate()) + '_' + pad(now.getHours()) + pad(now.getMinutes()) + '.csv';
+				var fname = 'medidortokens_' + now.getFullYear() + pad(now.getMonth() + 1) + pad(now.getDate()) + '_' + pad(now.getHours()) + pad(now.getMinutes()) + '.csv';
 				a.href = url;
 				a.download = fname;
 				document.body.appendChild(a);
@@ -817,8 +817,8 @@ ${a}`)
 		</script>
 	</body>
 </html>
-`; var ca = class t { constructor(e, a) { this._disposables = []; this._panel = e, this._extensionUri = a, this._panel.webview.html = this._getHtmlForWebview(), this._panel.onDidDispose(() => this.dispose(), null, this._disposables), this._panel.webview.onDidReceiveMessage(n => this._onMessage(n), null, this._disposables) } static { this.viewType = "altimeter.statisticsPanel" } static createOrShow(e) { let a = we.window.activeTextEditor ? we.window.activeTextEditor.viewColumn : void 0; if (t.currentPanel) { t.currentPanel._panel.reveal(a); return } let n = we.window.createWebviewPanel(t.viewType, "Estatísticas do Altimeter", a || we.ViewColumn.One, { enableScripts: !0, retainContextWhenHidden: !0 }); t.currentPanel = new t(n, e) } dispose() { for (t.currentPanel = void 0, this._panel.dispose(); this._disposables.length;) { let e = this._disposables.pop(); e && e.dispose() } } async _onMessage(e) { e.command === "generateStats" && await this._generateStatistics() } async _generateStatistics() { this._postMessage({ command: "loading", message: "Buscando trajetórias..." }); try { let e = await this._getClient(); if (!e) { this._postMessage({ command: "error", message: "Language server não conectado" }); return } let a = new it(e), n = await a.fetchSortedConversations(), i = Tt.filterByModifiedDate(n, 8); this._postMessage({ command: "loading", message: `Processando ${i.length} conversas...` }); let o = [], s = []; for (let u of i) try { let l = await a.fetchAllData(u.cascadeId); o.push(...l.metadata), s.push(...l.steps) } catch { } let r = Tt.aggregateByDay(o, s, 8); this._postMessage({ command: "statsReady", data: r }) } catch (e) { this._postMessage({ command: "error", message: e.message || "Erro desconhecido" }) } } async _getClient() { let a = await new qe().scanEnvironment(); return a ? new tt(a.connectPort, a.csrfToken) : null } _postMessage(e) { this._panel.webview.postMessage(e) } _getHtmlForWebview() { let e = this._panel.webview, a = e.asWebviewUri(we.Uri.joinPath(this._extensionUri, "resources", "libs", "chart.min.js")), n = JSON.stringify(ra()), i = JSON.stringify(fr()), o = `default-src 'none'; img-src https:; script-src ${e.cspSource} 'unsafe-inline'; style-src 'unsafe-inline';`; return ot.render(xr, { csp: o, chartJsUri: a.toString(), colorsJson: n, orderJson: i }) } }; var hr = `<!doctype html>
-`; var ca = class t { constructor(e, a) { this._disposables = []; this._panel = e, this._extensionUri = a, this._panel.webview.html = this._getHtmlForWebview(), this._panel.onDidDispose(() => this.dispose(), null, this._disposables), this._panel.webview.onDidReceiveMessage(n => this._onMessage(n), null, this._disposables) } static { this.viewType = "altimeter.statisticsPanel" } static createOrShow(e) { let a = we.window.activeTextEditor ? we.window.activeTextEditor.viewColumn : void 0; if (t.currentPanel) { t.currentPanel._panel.reveal(a); return } let n = we.window.createWebviewPanel(t.viewType, "Estatísticas do Altimeter", a || we.ViewColumn.One, { enableScripts: !0, retainContextWhenHidden: !0 }); t.currentPanel = new t(n, e) } dispose() { for (t.currentPanel = void 0, this._panel.dispose(); this._disposables.length;) { let e = this._disposables.pop(); e && e.dispose() } } async _onMessage(e) { e.command === "generateStats" && await this._generateStatistics(e.days || 8) } async _generateStatistics(days = 8) { this._postMessage({ command: "loading", message: "Buscando trajetórias..." }); try { let e = await this._getClient(); if (!e) { this._postMessage({ command: "error", message: "Language server não conectado" }); return } let a = new it(e), n = await a.fetchSortedConversations(), i = (days >= 9999) ? n : Tt.filterByModifiedDate(n, days); this._postMessage({ command: "loading", message: `Processando ${i.length} conversas...` }); let o = [], s = []; for (let u of i) try { let l = await a.fetchAllData(u.cascadeId); o.push(...l.metadata), s.push(...l.steps) } catch { } let r = Tt.aggregateByDay(o, s, (days >= 9999 ? 60 : days)); this._postMessage({ command: "statsReady", data: r, days: days }) } catch (e) { this._postMessage({ command: "error", message: e.message || "Erro desconhecido" }) } } async _getClient() { let a = await new qe().scanEnvironment(); return a ? new tt(a.connectPort, a.csrfToken) : null } _postMessage(e) { this._panel.webview.postMessage(e) } _getHtmlForWebview() { let e = this._panel.webview, a = e.asWebviewUri(we.Uri.joinPath(this._extensionUri, "resources", "libs", "chart.min.js")), n = JSON.stringify(ra()), i = JSON.stringify(fr()), o = `default-src 'none'; img-src https:; script-src ${e.cspSource} 'unsafe-inline'; style-src 'unsafe-inline';`; return ot.render(xr, { csp: o, chartJsUri: a.toString(), colorsJson: n, orderJson: i }) } }; var hr = `<!doctype html>
+`; var ca = class t { constructor(e, a) { this._disposables = []; this._panel = e, this._extensionUri = a, this._panel.webview.html = this._getHtmlForWebview(), this._panel.onDidDispose(() => this.dispose(), null, this._disposables), this._panel.webview.onDidReceiveMessage(n => this._onMessage(n), null, this._disposables) } static { this.viewType = "medidortokens.statisticsPanel" } static createOrShow(e) { let a = we.window.activeTextEditor ? we.window.activeTextEditor.viewColumn : void 0; if (t.currentPanel) { t.currentPanel._panel.reveal(a); return } let n = we.window.createWebviewPanel(t.viewType, "Estatísticas do MedidorTokens", a || we.ViewColumn.One, { enableScripts: !0, retainContextWhenHidden: !0 }); t.currentPanel = new t(n, e) } dispose() { for (t.currentPanel = void 0, this._panel.dispose(); this._disposables.length;) { let e = this._disposables.pop(); e && e.dispose() } } async _onMessage(e) { e.command === "generateStats" && await this._generateStatistics() } async _generateStatistics() { this._postMessage({ command: "loading", message: "Buscando trajetórias..." }); try { let e = await this._getClient(); if (!e) { this._postMessage({ command: "error", message: "Language server não conectado" }); return } let a = new it(e), n = await a.fetchSortedConversations(), i = Tt.filterByModifiedDate(n, 8); this._postMessage({ command: "loading", message: `Processando ${i.length} conversas...` }); let o = [], s = []; for (let u of i) try { let l = await a.fetchAllData(u.cascadeId); o.push(...l.metadata), s.push(...l.steps) } catch { } let r = Tt.aggregateByDay(o, s, 8); this._postMessage({ command: "statsReady", data: r }) } catch (e) { this._postMessage({ command: "error", message: e.message || "Erro desconhecido" }) } } async _getClient() { let a = await new qe().scanEnvironment(); return a ? new tt(a.connectPort, a.csrfToken) : null } _postMessage(e) { this._panel.webview.postMessage(e) } _getHtmlForWebview() { let e = this._panel.webview, a = e.asWebviewUri(we.Uri.joinPath(this._extensionUri, "resources", "libs", "chart.min.js")), n = JSON.stringify(ra()), i = JSON.stringify(fr()), o = `default-src 'none'; img-src https:; script-src ${e.cspSource} 'unsafe-inline'; style-src 'unsafe-inline';`; return ot.render(xr, { csp: o, chartJsUri: a.toString(), colorsJson: n, orderJson: i }) } }; var hr = `<!doctype html>
+`; var ca = class t { constructor(e, a) { this._disposables = []; this._panel = e, this._extensionUri = a, this._panel.webview.html = this._getHtmlForWebview(), this._panel.onDidDispose(() => this.dispose(), null, this._disposables), this._panel.webview.onDidReceiveMessage(n => this._onMessage(n), null, this._disposables) } static { this.viewType = "medidortokens.statisticsPanel" } static createOrShow(e) { let a = we.window.activeTextEditor ? we.window.activeTextEditor.viewColumn : void 0; if (t.currentPanel) { t.currentPanel._panel.reveal(a); return } let n = we.window.createWebviewPanel(t.viewType, "Estatísticas do MedidorTokens", a || we.ViewColumn.One, { enableScripts: !0, retainContextWhenHidden: !0 }); t.currentPanel = new t(n, e) } dispose() { for (t.currentPanel = void 0, this._panel.dispose(); this._disposables.length;) { let e = this._disposables.pop(); e && e.dispose() } } async _onMessage(e) { e.command === "generateStats" && await this._generateStatistics(e.days || 8) } async _generateStatistics(days = 8) { this._postMessage({ command: "loading", message: "Buscando trajetórias..." }); try { let e = await this._getClient(); if (!e) { this._postMessage({ command: "error", message: "Language server não conectado" }); return } let a = new it(e), n = await a.fetchSortedConversations(), i = (days >= 9999) ? n : Tt.filterByModifiedDate(n, days); this._postMessage({ command: "loading", message: `Processando ${i.length} conversas...` }); let o = [], s = []; for (let u of i) try { let l = await a.fetchAllData(u.cascadeId); o.push(...l.metadata), s.push(...l.steps) } catch { } let r = Tt.aggregateByDay(o, s, (days >= 9999 ? 60 : days)); this._postMessage({ command: "statsReady", data: r, days: days }) } catch (e) { this._postMessage({ command: "error", message: e.message || "Erro desconhecido" }) } } async _getClient() { let a = await new qe().scanEnvironment(); return a ? new tt(a.connectPort, a.csrfToken) : null } _postMessage(e) { this._panel.webview.postMessage(e) } _getHtmlForWebview() { let e = this._panel.webview, a = e.asWebviewUri(we.Uri.joinPath(this._extensionUri, "resources", "libs", "chart.min.js")), n = JSON.stringify(ra()), i = JSON.stringify(fr()), o = `default-src 'none'; img-src https:; script-src ${e.cspSource} 'unsafe-inline'; style-src 'unsafe-inline';`; return ot.render(xr, { csp: o, chartJsUri: a.toString(), colorsJson: n, orderJson: i }) } }; var hr = `<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -1234,21 +1234,21 @@ ${a}`)
 		this._extensionUri = e;
 		this._globalState = gState || null;
 		this._chartsExpanded = !1;
-		this._windowsExpanded = this._globalState ? this._globalState.get("altimeter.windowsExpanded", !0) : !0;
+		this._windowsExpanded = this._globalState ? this._globalState.get("medidortokens.windowsExpanded", !0) : !0;
 		this._quotaFormOpen = !1;
-		this._accounts = this._globalState ? this._globalState.get("altimeter.accounts", ["Conta Local"]) : ["Conta Local"];
-		this._activeAccount = this._globalState ? this._globalState.get("altimeter.activeAccount", "Conta Local") : "Conta Local";
+		this._accounts = this._globalState ? this._globalState.get("medidortokens.accounts", ["Conta Local"]) : ["Conta Local"];
+		this._activeAccount = this._globalState ? this._globalState.get("medidortokens.activeAccount", "Conta Local") : "Conta Local";
 		if (!this._accounts.includes(this._activeAccount)) {
 			this._accounts.push(this._activeAccount);
 		}
 		let defaultAccountPlans = {
 			"Conta Local": "pro"
 		};
-		this._accountPlans = this._globalState ? this._globalState.get("altimeter.accountPlans", defaultAccountPlans) : defaultAccountPlans;
+		this._accountPlans = this._globalState ? this._globalState.get("medidortokens.accountPlans", defaultAccountPlans) : defaultAccountPlans;
 		let defaultQuotaRefsByAccount = {
 			"Conta Local": {}
 		};
-		this._quotaRefsByAccount = this._globalState ? this._globalState.get("altimeter.quotaRefsByAccount", defaultQuotaRefsByAccount) : defaultQuotaRefsByAccount;
+		this._quotaRefsByAccount = this._globalState ? this._globalState.get("medidortokens.quotaRefsByAccount", defaultQuotaRefsByAccount) : defaultQuotaRefsByAccount;
 		let migrated = !1;
 		for (let acc of Object.keys(this._quotaRefsByAccount || {})) {
 			let accRefs = this._quotaRefsByAccount[acc] || {};
@@ -1262,7 +1262,7 @@ ${a}`)
 			}
 		}
 		if (migrated && this._globalState) {
-			this._globalState.update("altimeter.quotaRefsByAccount", this._quotaRefsByAccount);
+			this._globalState.update("medidortokens.quotaRefsByAccount", this._quotaRefsByAccount);
 		}
 		this._quotaRefs = this._quotaRefsByAccount[this._activeAccount] || {};
 		this._lastAutoQuotaSyncAt = 0;
@@ -1276,15 +1276,15 @@ ${a}`)
 		this._sessionsList = [];
 		this._viewNeedsRender = !1;
 		this._lastStats = null;
-		this._chartsExpanded = Q.workspace.getConfiguration("altimeter").get("chartsExpanded", !1);
+		this._chartsExpanded = Q.workspace.getConfiguration("medidortokens").get("chartsExpanded", !1);
 		Q.workspace.onDidChangeConfiguration(a => {
-			a.affectsConfiguration("altimeter.chartsExpanded") && (this._chartsExpanded = Q.workspace.getConfiguration("altimeter").get("chartsExpanded", !1), T.info(`[Sidebar] Configuration changed externally. _chartsExpanded: ${this._chartsExpanded}`), this._view && this._view.visible && this._fetchCurrentSessionStats(!1));
-			a.affectsConfiguration("altimeter.showStatusBar") && this._updateStatusBar(this._lastStats, this._selectedSession);
+			a.affectsConfiguration("medidortokens.chartsExpanded") && (this._chartsExpanded = Q.workspace.getConfiguration("medidortokens").get("chartsExpanded", !1), T.info(`[Sidebar] Configuration changed externally. _chartsExpanded: ${this._chartsExpanded}`), this._view && this._view.visible && this._fetchCurrentSessionStats(!1));
+			a.affectsConfiguration("medidortokens.showStatusBar") && this._updateStatusBar(this._lastStats, this._selectedSession);
 		});
 		this._startAutoRefresh();
 		this._fetchCurrentSessionStats(!1);
 	}
-	static { this.viewType = "altimeter.mainView" }
+	static { this.viewType = "medidortokens.mainView" }
 	resolveWebviewView(e, a, n) {
 		this._view = e;
 		this._viewNeedsRender = !0;
@@ -1294,18 +1294,18 @@ ${a}`)
 			if (i.command === "refresh") await this._fetchCurrentSessionStats(!0);
 			else if (i.command === "toggleCharts") {
 				this._chartsExpanded = i.expanded;
-				await Q.workspace.getConfiguration("altimeter").update("chartsExpanded", i.expanded, Q.ConfigurationTarget.Global);
+				await Q.workspace.getConfiguration("medidortokens").update("chartsExpanded", i.expanded, Q.ConfigurationTarget.Global);
 				T.info(`[Sidebar] Charts expanded state updated synchronously to: ${i.expanded}`);
 			} else if (i.command === "toggleWindows") {
 				this._windowsExpanded = !!i.expanded;
-				this._globalState && await this._globalState.update("altimeter.windowsExpanded", this._windowsExpanded);
+				this._globalState && await this._globalState.update("medidortokens.windowsExpanded", this._windowsExpanded);
 			} else if (i.command === "toggleQuotaForm") {
 				this._quotaFormOpen = !!i.open;
 			} else if (i.command === "changeAccount") {
 				this._manualAccountOverride = !0;
 				this._activeAccount = i.account || (this._accounts && this._accounts[0]) || "Conta Local";
 				this._quotaRefs = this._quotaRefsByAccount[this._activeAccount] || {};
-				this._globalState && await this._globalState.update("altimeter.activeAccount", this._activeAccount);
+				this._globalState && await this._globalState.update("medidortokens.activeAccount", this._activeAccount);
 				this._viewNeedsRender = !0;
 				await this._fetchCurrentSessionStats(!0);
 			} else if (i.command === "toggleAccountPlan") {
@@ -1313,7 +1313,7 @@ ${a}`)
 				let nextPlan = curPlan === "pro" ? "free" : "pro";
 				this._manualPlanOverride[this._activeAccount] = !0;
 				this._accountPlans[this._activeAccount] = nextPlan;
-				this._globalState && await this._globalState.update("altimeter.accountPlans", this._accountPlans);
+				this._globalState && await this._globalState.update("medidortokens.accountPlans", this._accountPlans);
 				this._viewNeedsRender = !0;
 				await this._fetchCurrentSessionStats(!0);
 			} else if (i.command === "syncQuotasNow") {
@@ -1331,7 +1331,7 @@ ${a}`)
 					newAcc = newAcc.trim();
 					if (!this._accounts.includes(newAcc)) {
 						this._accounts.push(newAcc);
-						this._globalState && await this._globalState.update("altimeter.accounts", this._accounts);
+						this._globalState && await this._globalState.update("medidortokens.accounts", this._accounts);
 					}
 					let pick = await Q.window.showQuickPick([
 						{ label: "Antigravity Starter Quota (Free)", description: "Gemini 7d e Claude/GPT 7d apenas (sem 5h, sem Argon)", val: "free" },
@@ -1339,10 +1339,10 @@ ${a}`)
 					], { placeHolder: "Selecione o plano para " + newAcc });
 					let selectedPlan = pick ? pick.val : "free";
 					this._accountPlans[newAcc] = selectedPlan;
-					this._globalState && await this._globalState.update("altimeter.accountPlans", this._accountPlans);
+					this._globalState && await this._globalState.update("medidortokens.accountPlans", this._accountPlans);
 					this._activeAccount = newAcc;
 					this._quotaRefs = this._quotaRefsByAccount[newAcc] || {};
-					this._globalState && await this._globalState.update("altimeter.activeAccount", this._activeAccount);
+					this._globalState && await this._globalState.update("medidortokens.activeAccount", this._activeAccount);
 					this._viewNeedsRender = !0;
 					await this._fetchCurrentSessionStats(!0);
 				}
@@ -1359,10 +1359,10 @@ ${a}`)
 						this._activeAccount = this._accounts[0];
 						this._quotaRefs = this._quotaRefsByAccount[this._activeAccount] || {};
 						if (this._globalState) {
-							await this._globalState.update("altimeter.accounts", this._accounts);
-							await this._globalState.update("altimeter.accountPlans", this._accountPlans);
-							await this._globalState.update("altimeter.quotaRefsByAccount", this._quotaRefsByAccount);
-							await this._globalState.update("altimeter.activeAccount", this._activeAccount);
+							await this._globalState.update("medidortokens.accounts", this._accounts);
+							await this._globalState.update("medidortokens.accountPlans", this._accountPlans);
+							await this._globalState.update("medidortokens.quotaRefsByAccount", this._quotaRefsByAccount);
+							await this._globalState.update("medidortokens.activeAccount", this._activeAccount);
 						}
 						this._viewNeedsRender = !0;
 						await this._fetchCurrentSessionStats(!0);
@@ -1423,14 +1423,14 @@ ${a}`)
 				this._quotaRefsByAccount[this._activeAccount] = nextRefs;
 				this._quotaRefs = nextRefs;
 				this._quotaFormOpen = !1;
-				this._globalState && await this._globalState.update("altimeter.quotaRefsByAccount", this._quotaRefsByAccount);
+				this._globalState && await this._globalState.update("medidortokens.quotaRefsByAccount", this._quotaRefsByAccount);
 				this._viewNeedsRender = !0;
 				await this._fetchCurrentSessionStats(!0);
 			} else if (i.command === "clearQuotaRefs") {
 				this._quotaRefsByAccount[this._activeAccount] = {};
 				this._quotaRefs = {};
 				this._quotaFormOpen = !1;
-				this._globalState && await this._globalState.update("altimeter.quotaRefsByAccount", this._quotaRefsByAccount);
+				this._globalState && await this._globalState.update("medidortokens.quotaRefsByAccount", this._quotaRefsByAccount);
 				this._viewNeedsRender = !0;
 				await this._fetchCurrentSessionStats(!0);
 			} else if (i.command === "changeSession") {
@@ -1472,18 +1472,18 @@ ${a}`)
 		try {
 			if (!statusBarItem) return;
 			if (!c) {
-				if (Q.workspace.getConfiguration("altimeter").get("showStatusBar", !0)) statusBarItem.show();
+				if (Q.workspace.getConfiguration("medidortokens").get("showStatusBar", !0)) statusBarItem.show();
 				else statusBarItem.hide();
 				return;
 			}
 			this._lastStats = c;
-			if (Q.workspace.getConfiguration("altimeter").get("showStatusBar", !0)) {
+			if (Q.workspace.getConfiguration("medidortokens").get("showStatusBar", !0)) {
 				let d = c.totalInput + c.totalCacheRead;
 				let fmtIn = d >= 1e6 ? (d / 1e6).toFixed(1) + "M" : d >= 1e3 ? (d / 1e3).toFixed(1) + "K" : d;
 				let fmtOut = c.totalOutput >= 1e6 ? (c.totalOutput / 1e6).toFixed(1) + "M" : c.totalOutput >= 1e3 ? (c.totalOutput / 1e3).toFixed(1) + "K" : c.totalOutput;
 				let tag = (mode === "today") ? "Hoje" : (mode === "latest" || !mode) ? "Sess\xE3o" : "Hist\xF3rico";
 				statusBarItem.text = `$(graph) ${fmtIn} in | ${fmtOut} out`;
-				statusBarItem.tooltip = `Altimeter [${tag}]:\nEntrada: ${d.toLocaleString('pt-BR')} (Nova: ${c.totalInput.toLocaleString('pt-BR')} + Cache: ${c.totalCacheRead.toLocaleString('pt-BR')})\nSa\xEDda: ${c.totalOutput.toLocaleString('pt-BR')}\nChamadas: ${c.totalCalls}\nContexto: ${c.lastContextSize.toLocaleString('pt-BR')}\n\nClique para abrir as estat\xEDsticas completas.`;
+				statusBarItem.tooltip = `MedidorTokens [${tag}]:\nEntrada: ${d.toLocaleString('pt-BR')} (Nova: ${c.totalInput.toLocaleString('pt-BR')} + Cache: ${c.totalCacheRead.toLocaleString('pt-BR')})\nSa\xEDda: ${c.totalOutput.toLocaleString('pt-BR')}\nChamadas: ${c.totalCalls}\nContexto: ${c.lastContextSize.toLocaleString('pt-BR')}\n\nClique para abrir as estat\xEDsticas completas.`;
 				statusBarItem.show();
 			} else {
 				statusBarItem.hide();
@@ -1518,7 +1518,7 @@ ${a}`)
 		if (changed) {
 			this._quotaRefsByAccount[this._activeAccount] = accRefs;
 			this._quotaRefs = accRefs;
-			this._globalState && await this._globalState.update("altimeter.quotaRefsByAccount", this._quotaRefsByAccount);
+			this._globalState && await this._globalState.update("medidortokens.quotaRefsByAccount", this._quotaRefsByAccount);
 		}
 		return changed;
 	}
@@ -1605,18 +1605,18 @@ ${a}`)
 						if (this._activeAccount === ph) {
 							this._activeAccount = email;
 							this._quotaRefs = this._quotaRefsByAccount[email] || {};
-							this._globalState && await this._globalState.update("altimeter.activeAccount", this._activeAccount);
+							this._globalState && await this._globalState.update("medidortokens.activeAccount", this._activeAccount);
 						}
-						this._globalState && await this._globalState.update("altimeter.accountPlans", this._accountPlans);
-						this._globalState && await this._globalState.update("altimeter.quotaRefsByAccount", this._quotaRefsByAccount);
+						this._globalState && await this._globalState.update("medidortokens.accountPlans", this._accountPlans);
+						this._globalState && await this._globalState.update("medidortokens.quotaRefsByAccount", this._quotaRefsByAccount);
 					}
-					this._globalState && await this._globalState.update("altimeter.accounts", this._accounts);
+					this._globalState && await this._globalState.update("medidortokens.accounts", this._accounts);
 					changed = !0;
 				}
 				if (!this._manualAccountOverride && this._activeAccount !== email) {
 					this._activeAccount = email;
 					this._quotaRefs = this._quotaRefsByAccount[this._activeAccount] || {};
-					this._globalState && await this._globalState.update("altimeter.activeAccount", this._activeAccount);
+					this._globalState && await this._globalState.update("medidortokens.activeAccount", this._activeAccount);
 					changed = !0;
 				}
 			}
@@ -1627,7 +1627,7 @@ ${a}`)
 				else if (tierText.includes("pro") || tierText.includes("ultra") || tierText.includes("standard") || tierText.includes("enterprise")) detectedPlan = "pro";
 				if (detectedPlan && !this._manualPlanOverride[targetAcc] && this._accountPlans[targetAcc] !== detectedPlan) {
 					this._accountPlans[targetAcc] = detectedPlan;
-					this._globalState && await this._globalState.update("altimeter.accountPlans", this._accountPlans);
+					this._globalState && await this._globalState.update("medidortokens.accountPlans", this._accountPlans);
 					if (targetAcc === this._activeAccount) changed = !0;
 				}
 			}
@@ -1737,7 +1737,7 @@ ${a}`)
 				this._quotaRefsByAccount[targetAcc] = nextAccRefs;
 				if (targetAcc === this._activeAccount) this._quotaRefs = nextAccRefs;
 				this._lastAutoQuotaSyncAt = now;
-				this._globalState && await this._globalState.update("altimeter.quotaRefsByAccount", this._quotaRefsByAccount);
+				this._globalState && await this._globalState.update("medidortokens.quotaRefsByAccount", this._quotaRefsByAccount);
 				if (dataChanged && targetAcc === this._activeAccount) changed = !0;
 				T.info(`[Sidebar] Auto quota sync OK for ${targetAcc}: ${Object.entries(fetchedRefs).map(([k, v]) => `${k}=${v.pct}%`).join(", ")}`);
 			} else if (statusRes) {
@@ -2331,20 +2331,20 @@ ${a}`)
 			</script>`; this._view.webview.html = ot.render(hr, { csp: r, chartJsUri: s.toString(), content: a, chartScript: u || "", initialScript: l })
 	}
 }; function Ru(t) {
-	T.init(), T.info("Altimeter is now active!");
+	T.init(), T.info("MedidorTokens is now active!");
 	try {
 		statusBarItem = Q.window.createStatusBarItem(Q.StatusBarAlignment.Right, 100);
-		statusBarItem.command = "altimeter.openStatistics";
-		statusBarItem.text = "$(graph) Altimeter";
-		statusBarItem.tooltip = "Altimeter: Estat\xEDsticas de Tokens\nClique para abrir as estat\xEDsticas.";
-		if (Q.workspace.getConfiguration("altimeter").get("showStatusBar", !0)) statusBarItem.show();
+		statusBarItem.command = "medidortokens.openStatistics";
+		statusBarItem.text = "$(graph) MedidorTokens";
+		statusBarItem.tooltip = "MedidorTokens: Estat\xEDsticas de Tokens\nClique para abrir as estat\xEDsticas.";
+		if (Q.workspace.getConfiguration("medidortokens").get("showStatusBar", !0)) statusBarItem.show();
 		t.subscriptions.push(statusBarItem);
 	} catch { }
 	let e = new la(t.extensionUri, t.globalState);
 	t.subscriptions.push({ dispose: () => e._stopAutoRefresh() }),
 	t.subscriptions.push(Q.window.registerWebviewViewProvider(la.viewType, e)),
-	t.subscriptions.push(Q.commands.registerCommand("altimeter.refresh", () => { e.triggerRefresh() })),
-	t.subscriptions.push(Q.commands.registerCommand("altimeter.openStatistics", () => { ca.createOrShow(t.extensionUri) }))
+	t.subscriptions.push(Q.commands.registerCommand("medidortokens.refresh", () => { e.triggerRefresh() })),
+	t.subscriptions.push(Q.commands.registerCommand("medidortokens.openStatistics", () => { ca.createOrShow(t.extensionUri) }))
 } function Au() { } 0 && (module.exports = { activate, deactivate });
 /*! Bundled license information:
 

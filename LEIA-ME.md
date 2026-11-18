@@ -1,6 +1,7 @@
-# Correção e Aprimoramentos da Extensão Altimeter para Antigravity IDE 2.6.0+
+# MedidorTokens — Monitor de Tokens e Cotas para Antigravity IDE 2.6.0+
 
 **Versão:** 0.1.0  
+**Identificador:** `rogeriocenteno.medidortokens`  
 **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
 **Data da atualização:** 18/11/2026  
 **Compatibilidade:** Antigravity IDE 2.6.0 ou superior (com retrocompatibilidade para versões anteriores)  
@@ -43,18 +44,18 @@
 1. Abra o **Antigravity IDE**.
 2. Abra a aba **Extensions** (`Ctrl + Shift + X`).
 3. Clique no menu de três pontos **`...`** (no canto superior direito da barra de extensões) e selecione **`Install from VSIX...`**.
-4. Selecione o arquivo **`altimeter-0.1.0-agy2.6-fix.vsix`**.
+4. Selecione o arquivo **`medidortokens-0.1.0-agy2.6-fix.vsix`**.
 5. Recarregue a janela (`Ctrl + Shift + P` → `Developer: Reload Window`).
 
 ### Forma B: Instalador automático de 1 clique (Windows)
 1. Dê dois cliques em **`instalar_correcao_altimeter.bat`**.
-2. O script detecta automaticamente a instalação do Altimeter, salva backup do arquivo anterior e copia a versão atualizada.
+2. O script detecta automaticamente a instalação do MedidorTokens (ou da base anterior), salva backup do arquivo anterior e copia a versão atualizada.
 3. No Antigravity IDE, pressione `Ctrl + Shift + P` e execute **`Developer: Reload Window`**.
 
 ### Forma C: Substituição manual do arquivo `extension.js`
 1. Copie o arquivo `dist_altimeter_corrigido\extension.js`.
 2. Cole substituindo o arquivo existente na sua pasta de extensões:
-   `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.altimeter-0.1.0\dist\extension.js`  
+   `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.0\dist\extension.js`  
    *(ou na pasta correspondente à versão instalada)*.
 3. Recarregue a janela do Antigravity IDE (`Ctrl + Shift + P` → `Developer: Reload Window`).
 

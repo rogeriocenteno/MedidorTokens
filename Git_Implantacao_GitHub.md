@@ -1,6 +1,6 @@
 # Git_Implantacao_GitHub.md — Guia de Implantação de Versionamento via GitHub
 
-> **Projeto:** MedidorTokens — Extensão Altimeter (Monitoramento de Tokens e Cotas para Antigravity IDE 2.6.0+)  
+> **Projeto:** MedidorTokens — Extensão MedidorTokens (Monitoramento de Tokens e Cotas para Antigravity IDE 2.6.0+)  
 > **Baseado no guia padrão de versionamento Git/GitHub do autor.**  
 > **Implantação MedidorTokens:** 18/11/2026.
 
@@ -57,7 +57,7 @@ Caso precise conferir os parâmetros ou recriar em outro momento:
 1. Acesse: **https://github.com/new**
 2. Configurações do repositório:
    - **Repository name:** `MedidorTokens`
-   - **Description:** `Extensão Altimeter aprimorada para monitoramento de tokens e cotas em tempo real no Antigravity IDE 2.6.0+`
+   - **Description:** `Extensão MedidorTokens para monitoramento de tokens e cotas em tempo real no Antigravity IDE 2.6.0+`
    - **Visibility:** ✅ **Public** (Repositório Público — exige sanitização total de caminhos locais, e-mails e segredos em todos os commits e ativação de Secret Protection / Push Protection em Settings → Advanced Security)
    - ❌ Não inicialize com arquivos adicionais caso vá conectar um histórico local existente
 3. URL SSH de conexão:
@@ -77,11 +77,11 @@ O `.gitignore` protege:
 |-----------|---------------------|
 | Credenciais e chaves | `credenciais.md`, `.env`, `.env.*`, `*credentials*.json`, `*token*.json`, `*secret*.json` |
 | Backups locais | `backup_altimeter_0.0.4/`, `backups/`, `*.bak`, `*.bak*`, `PRE_RESTORE_*` |
-| Pacotes antigos | `altimeter-0.0.4*.vsix`, `altimeter-0.0.5*.vsix`, `altimeter-0.0.6*.vsix`, `*.zip` |
+| Pacotes antigos | `altimeter-*.vsix`, `medidortokens-0.0.*.vsix`, `*.zip` |
 | Node.js e logs locais | `node_modules/`, `npm-debug.log*`, `*.log`, `transcript*.jsonl`, `*.pbtxt` |
 | Sistema e temporários | `.DS_Store`, `Thumbs.db`, `desktop.ini`, `nul`, `.idea/`, `*.swp`, `*.tmp`, `scratch/` |
 
-> ⚠️ **Arquivos oficiais do projeto** (`dist_altimeter_corrigido/extension.js`, `gerar_pacote.js`, `instalar_correcao_altimeter.bat`, `altimeter-0.1.0-agy2.6-fix.vsix` e os arquivos `.md`) **são versionados** — apenas backups locais `.bak`, logs/transcripts e pacotes legados são ignorados.
+> ⚠️ **Arquivos oficiais do projeto** (`dist_altimeter_corrigido/extension.js`, `gerar_pacote.js`, `instalar_correcao_altimeter.bat`, `medidortokens-0.1.0-agy2.6-fix.vsix` e os arquivos `.md`) **são versionados** — apenas backups locais `.bak`, logs/transcripts e pacotes legados são ignorados.
 
 ---
 
@@ -93,7 +93,7 @@ Antes do primeiro commit, confirme que o código JavaScript está válido e sinc
 # Validar sintaxe do código principal
 node -c "./dist_altimeter_corrigido/extension.js"
 
-# Sincronizar e garantir que o pacote altimeter-0.1.0-agy2.6-fix.vsix está atualizado
+# Sincronizar e garantir que o pacote medidortokens-0.1.0-agy2.6-fix.vsix está atualizado
 node "./gerar_pacote.js"
 ```
 
@@ -120,12 +120,12 @@ git add .
 git diff --stat --cached
 # Revise a lista. Confirme que os itens abaixo NÃO aparecem:
 # - backup_altimeter_0.0.4/ e arquivos *.bak*
-# - altimeter-0.0.5-agy2.6-fix.vsix / altimeter-0.0.6-agy2.6-fix.vsix
+# - altimeter-*.vsix / medidortokens-0.0.*.vsix
 # - credenciais.md / .env / *token*.json
 # - transcript*.jsonl / *.log
 
 # Criar o primeiro commit
-git commit -m "feat: primeiro commit — extensão Altimeter v0.1.0 (rogeriocenteno) para Antigravity IDE 2.6.0+"
+git commit -m "feat: primeiro commit — extensão MedidorTokens v0.1.0 (rogeriocenteno) para Antigravity IDE 2.6.0+"
 ```
 
 ---

@@ -1,10 +1,10 @@
-# Plano de Melhorias — Extensão Altimeter (Antigravity IDE 2.6.0+)
+# Plano de Melhorias — Extensão MedidorTokens (Antigravity IDE 2.6.0+)
 
-**Versão atual:** `0.1.0` | **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
+**Versão atual:** `0.1.0` | **Identificador:** `rogeriocenteno.medidortokens` | **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
 **Data de criação do plano:** 28/10/2026  
 **Fuso horário padrão do projeto:** `UTC-3` (`America/Sao_Paulo`)  
 **Idioma padrão da interface e documentação:** Português do Brasil (`pt-BR`)  
-**Arquivo-alvo principal:** `./dist_altimeter_corrigido/extension.js` (sincronizado pelo `gerar_pacote.js` com `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.altimeter-0.1.0\dist\extension.js`)  
+**Arquivo-alvo principal:** `./dist_altimeter_corrigido/extension.js` (sincronizado pelo `gerar_pacote.js` com `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.0\dist\extension.js`)  
 **Pasta de backups e pacotes do projeto:** `./` (raiz do projeto)  
 **Repositório:** `https://github.com/rogeriocenteno/MedidorTokens` (**PÚBLICO** — branch de trabalho `develop`, releases em `main`)
 
@@ -32,8 +32,8 @@
 | `nt` (`StatsCalculator`) | Linha 15 | Calcula os totais da sessão (`totalCalls`, `totalInput`, `totalOutput`, `totalCacheRead`, `lastContextSize`, `modelBreakdown`). |
 | `it` (`TrajectoryService`) | Linha 15 | Lista e ordena todas as conversas (`fetchSortedConversations`) e busca dados incrementais (`fetchSessionData`). |
 | `Tt` (`DailyAggregator`) | Linha 15 | Filtra conversas por data e agrega o consumo diário por modelo para a tela de estatísticas. |
-| `xr` + `ca` (`StatisticsPanel`) | Linhas 16–598 | Template HTML/JS e controlador da janela completa **Altimeter Statistics** (`altimeter.openStatistics`). |
-| `hr` + `la` (`SidebarProvider`) | Linhas 598–857 | Template HTML/CSS/JS e controlador do painel lateral **Altimeter: Token Stats** (`altimeter.mainView`). |
+| `xr` + `ca` (`StatisticsPanel`) | Linhas 16–598 | Template HTML/JS e controlador da janela completa **Estatísticas do MedidorTokens** (`medidortokens.openStatistics`). |
+| `hr` + `la` (`SidebarProvider`) | Linhas 598–857 | Template HTML/CSS/JS e controlador do painel lateral **MedidorTokens: Estatísticas de Tokens** (`medidortokens.mainView`). |
 | `Ru()` (`activate`) | Linha 857 | Função de ativação da extensão, registro da Webview lateral e dos comandos. |
 
 ---
@@ -143,7 +143,7 @@
 - **Onde alterar:** Função `Ru(t)` (Linha 857) e classe `la` (Linha 729).
 - **Como implementar:**
   1. Em `Ru(t)`, criar um `vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100)`.
-  2. Configurar `statusBarItem.command = "altimeter.openStatistics"`.
+  2. Configurar `statusBarItem.command = "medidortokens.openStatistics"`.
   3. Sempre que `la._fetchCurrentSessionStats` atualizar as estatísticas (ou em um timer leve independente caso a sidebar esteja oculta), atualizar o texto da barra inferior:
      - Texto: `$(graph) Ctx: 33,1K | Ent: 9,2M | Saída: 63,2K`
      - Tooltip (ao passar o mouse): detalhamento por modelo da sessão ativa e eficiência de cache.
@@ -229,5 +229,5 @@ Ordem seguida na implantação das primeiras etapas (menor para maior impacto vi
 7. **Etapa 7** — Contador na Barra de Status inferior da IDE (`Status Bar`).
 8. **Etapa 8** — Filtro de período (8, 15, 30 dias, Tudo) e exportação CSV na janela de estatísticas.
 
-> **Observação:** Após concluir qualquer etapa, execute `node gerar_pacote.js` na pasta raiz do projeto (`./`) para sincronizar a extensão instalada e atualizar o instalador `altimeter-0.1.0-agy2.6-fix.vsix`. Depois, versione em `develop` conforme `Git_Rotina_Versionamento.md`.
+> **Observação:** Após concluir qualquer etapa, execute `node gerar_pacote.js` na pasta raiz do projeto (`./`) para sincronizar a extensão instalada e atualizar o instalador `medidortokens-0.1.0-agy2.6-fix.vsix`. Depois, versione em `develop` conforme `Git_Rotina_Versionamento.md`.
 

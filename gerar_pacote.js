@@ -3,6 +3,8 @@ const os = require('os');
 const path = require('path');
 const zlib = require('zlib');
 
+const targetName = 'medidortokens';
+const targetDisplayName = 'MedidorTokens';
 const targetVersion = '0.1.0';
 const targetPublisher = 'rogeriocenteno';
 const targetAuthor = {
@@ -14,18 +16,19 @@ const targetRepoUrl = 'https://github.com/rogeriocenteno/MedidorTokens';
 
 const extensionsRoot = path.join(os.homedir(), '.antigravity-ide', 'extensions');
 const allEntries = fs.existsSync(extensionsRoot) ? fs.readdirSync(extensionsRoot) : [];
-const ownDirs = allEntries.filter((name) => name.startsWith(`${targetPublisher}.altimeter-`)).sort();
+const ownDirs = allEntries.filter((name) => name.startsWith(`${targetPublisher}.${targetName}-`)).sort();
+const oldAltDirs = allEntries.filter((name) => name.startsWith(`${targetPublisher}.altimeter-`)).sort();
 const legacyDirs = allEntries.filter((name) => name.startsWith('pqub.altimeter-')).sort();
-const altimeterDirs = ownDirs.length > 0 ? ownDirs : legacyDirs;
+const foundDirs = ownDirs.length > 0 ? ownDirs : (oldAltDirs.length > 0 ? oldAltDirs : legacyDirs);
 
-if (altimeterDirs.length === 0) {
-  throw new Error('Pasta da extensão altimeter não encontrada em: ' + extensionsRoot);
+if (foundDirs.length === 0) {
+  throw new Error('Pasta da extensão MedidorTokens/Altimeter não encontrada em: ' + extensionsRoot);
 }
 
-const targetFolderName = `${targetPublisher}.altimeter-${targetVersion}`;
+const targetFolderName = `${targetPublisher}.${targetName}-${targetVersion}`;
 const sourceExtDir = path.join(
   extensionsRoot,
-  ownDirs.includes(targetFolderName) ? targetFolderName : altimeterDirs[altimeterDirs.length - 1]
+  ownDirs.includes(targetFolderName) ? targetFolderName : foundDirs[foundDirs.length - 1]
 );
 const extDir = path.join(extensionsRoot, targetFolderName);
 const outDir = __dirname;
@@ -178,13 +181,16 @@ const contentTypesXml = `<?xml version="1.0" encoding="utf-8"?>
 
 const vsixManifestPath = path.join(extDir, '.vsixmanifest');
 const vsixManifest = fs.readFileSync(vsixManifestPath, 'utf8')
-  .replace(/<Identity\b[^>]*>/, `<Identity Language="pt-BR" Id="altimeter" Version="${targetVersion}" Publisher="${targetPublisher}" />`)
+  .replace(/<Identity\b[^>]*>/, `<Identity Language="pt-BR" Id="${targetName}" Version="${targetVersion}" Publisher="${targetPublisher}" />`)
+  .replace(/<DisplayName\b[^>]*>[\s\S]*?<\/DisplayName>/, `<DisplayName>${targetDisplayName}</DisplayName>`)
   .replace(/<Description\b[^>]*>[\s\S]*?<\/Description>/, `<Description xml:space="preserve">${targetDescription}</Description>`)
   .replace(/https:\/\/github\.com\/pqub\/altimeter/g, targetRepoUrl);
 fs.writeFileSync(vsixManifestPath, vsixManifest, 'utf8');
 
 const pkgJsonPath = path.join(extDir, 'package.json');
 const pkgJsonObj = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
+pkgJsonObj.name = targetName;
+pkgJsonObj.displayName = targetDisplayName;
 pkgJsonObj.version = targetVersion;
 pkgJsonObj.publisher = targetPublisher;
 pkgJsonObj.author = targetAuthor;
@@ -192,6 +198,12 @@ pkgJsonObj.description = targetDescription;
 pkgJsonObj.homepage = `${targetRepoUrl}#readme`;
 pkgJsonObj.bugs = { url: `${targetRepoUrl}/issues` };
 pkgJsonObj.repository = { type: 'git', url: `${targetRepoUrl}.git` };
+if (pkgJsonObj.contributes) {
+  const contribStr = JSON.stringify(pkgJsonObj.contributes)
+    .replace(/altimeter/g, targetName)
+    .replace(/Altimeter/g, targetDisplayName);
+  pkgJsonObj.contributes = JSON.parse(contribStr);
+}
 fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJsonObj, null, '\t'), 'utf8');
 
 const vsixPkgObj = { ...pkgJsonObj };
@@ -229,7 +241,7 @@ for (const rel of optionalFiles) {
 }
 
 const vsixBuffer = createZip(entries);
-const vsixPath = path.join(outDir, `altimeter-${targetVersion}-agy2.6-fix.vsix`);
+const vsixPath = path.join(outDir, `${targetName}-${targetVersion}-agy2.6-fix.vsix`);
 fs.writeFileSync(vsixPath, vsixBuffer);
 console.log('VSIX gerado com sucesso:', vsixPath, '(' + vsixBuffer.length + ' bytes)');
 
@@ -243,17 +255,18 @@ if (fs.existsSync(extensionsJsonPath)) {
       const uriPath = /^[A-Za-z]:/.test(normalizedExtDir)
         ? '/' + normalizedExtDir[0].toLowerCase() + normalizedExtDir.slice(1)
         : normalizedExtDir;
+      const externalUri = 'file:///' + uriPath.replace(/^\//, '').replace(':', '%3A');
+      const targetId = `${targetPublisher}.${targetName}`;
       let updated = false;
       const nextList = [];
       for (const item of extList) {
         const id = item && item.identifier && item.identifier.id;
-        if (id === 'pqub.altimeter' || id === `${targetPublisher}.altimeter`) {
+        if (id === 'pqub.altimeter' || id === `${targetPublisher}.altimeter` || id === targetId) {
           if (updated) continue;
-          item.identifier.id = `${targetPublisher}.altimeter`;
+          item.identifier.id = targetId;
           delete item.identifier.uuid;
           item.version = targetVersion;
           item.relativeLocation = targetFolderName;
-          const externalUri = 'file:///' + uriPath.replace(/^\//, '').replace(':', '%3A');
           item.location = {
             $mid: 1,
             fsPath: extDir,
@@ -273,10 +286,34 @@ if (fs.existsSync(extensionsJsonPath)) {
         }
         nextList.push(item);
       }
-      if (updated) {
-        fs.writeFileSync(extensionsJsonPath, JSON.stringify(nextList), 'utf8');
-        console.log('Registro atualizado em:', extensionsJsonPath);
+      if (!updated) {
+        nextList.push({
+          identifier: { id: targetId },
+          version: targetVersion,
+          location: {
+            $mid: 1,
+            fsPath: extDir,
+            _sep: 1,
+            external: externalUri,
+            path: uriPath,
+            scheme: 'file'
+          },
+          relativeLocation: targetFolderName,
+          metadata: {
+            isApplicationScoped: false,
+            isMachineScoped: false,
+            isBuiltin: false,
+            installedTimestamp: Date.now(),
+            pinned: true,
+            source: 'vsix',
+            publisherDisplayName: targetPublisher,
+            isPreReleaseVersion: false,
+            hasPreReleaseVersion: false
+          }
+        });
       }
+      fs.writeFileSync(extensionsJsonPath, JSON.stringify(nextList), 'utf8');
+      console.log('Registro atualizado em:', extensionsJsonPath);
     }
   } catch (err) {
     console.warn('Aviso ao atualizar extensions.json:', err.message);
@@ -285,8 +322,8 @@ if (fs.existsSync(extensionsJsonPath)) {
 
 // Remove pastas antigas da extensao para evitar conflitos de comandos na IDE
 for (const name of fs.readdirSync(extensionsRoot)) {
-  const isLegacy = name.startsWith('pqub.altimeter-');
-  const isOldOwn = name.startsWith(`${targetPublisher}.altimeter-`) && name !== targetFolderName;
+  const isLegacy = name.startsWith('pqub.altimeter-') || name.startsWith(`${targetPublisher}.altimeter-`);
+  const isOldOwn = name.startsWith(`${targetPublisher}.${targetName}-`) && name !== targetFolderName;
   if (isLegacy || isOldOwn) {
     const oldPath = path.join(extensionsRoot, name);
     fs.rmSync(oldPath, { recursive: true, force: true });
@@ -294,13 +331,15 @@ for (const name of fs.readdirSync(extensionsRoot)) {
   }
 }
 
-// Move o pacote .vsix antigo (0.0.6) para backup_altimeter_0.0.4/ caso exista na raiz
-const oldVsixPath = path.join(outDir, 'altimeter-0.0.6-agy2.6-fix.vsix');
-if (fs.existsSync(oldVsixPath)) {
-  const backupDir = path.join(outDir, 'backup_altimeter_0.0.4');
-  fs.mkdirSync(backupDir, { recursive: true });
-  const backupOldVsixPath = path.join(backupDir, 'altimeter-0.0.6-agy2.6-fix.vsix');
-  fs.renameSync(oldVsixPath, backupOldVsixPath);
-  console.log('Pacote anterior movido para backup:', backupOldVsixPath);
+// Move pacotes .vsix antigos para backup_altimeter_0.0.4/ caso existam na raiz
+for (const oldVsixName of ['altimeter-0.0.6-agy2.6-fix.vsix', 'altimeter-0.1.0-agy2.6-fix.vsix']) {
+  const oldVsixPath = path.join(outDir, oldVsixName);
+  if (fs.existsSync(oldVsixPath)) {
+    const backupDir = path.join(outDir, 'backup_altimeter_0.0.4');
+    fs.mkdirSync(backupDir, { recursive: true });
+    const backupOldVsixPath = path.join(backupDir, oldVsixName);
+    fs.renameSync(oldVsixPath, backupOldVsixPath);
+    console.log('Pacote anterior movido para backup:', backupOldVsixPath);
+  }
 }
 

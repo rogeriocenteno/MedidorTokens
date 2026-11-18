@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="dist_altimeter_corrigido/icon.png" alt="Logo Altimeter" width="128" />
+  <img src="dist_altimeter_corrigido/icon.png" alt="Logo MedidorTokens" width="128" />
 </p>
 
-<h1 align="center">Altimeter para Antigravity IDE (v0.1.0)</h1>
+<h1 align="center">MedidorTokens para Antigravity IDE (v0.1.0)</h1>
 
 <p align="center">
   Extensão para monitoramento em tempo real do consumo de tokens de Inteligência Artificial e cotas de uso (<code>5h</code> / <code>7d</code>) no <strong>Antigravity IDE 2.6.0+</strong>.
@@ -13,13 +13,14 @@
 ## Visão Geral
 
 - **Versão atual:** `0.1.0`
-- **Identificador da extensão:** `rogeriocenteno.altimeter`
+- **Nome de exibição:** `MedidorTokens`
+- **Identificador da extensão:** `rogeriocenteno.medidortokens`
 - **Autor / Mantenedor:** Rogério Centeno ([`rogeriocenteno`](https://github.com/rogeriocenteno))
 - **Idioma oficial:** Português do Brasil (`pt-BR`)
 - **Fuso horário:** `America/Sao_Paulo` (`UTC-3`)
 - **Licença:** [MIT](./LICENSE)
 
-Na versão 2.6.0 do Antigravity IDE, a substituição do processo legado `language_server_windows_x64.exe` pelo serviço nativo em background fez a extensão original (`0.0.4`) falhar com `Language Server not found`. Este projeto corrige o núcleo de leitura lendo diretamente os logs `transcript.jsonl` em `~/.gemini/antigravity/brain/` e adiciona 12 etapas completas de monitoramento de tokens, cotas e estatísticas.
+Na versão 2.6.0 do Antigravity IDE, a substituição do processo legado `language_server_windows_x64.exe` pelo serviço nativo em background fez a extensão base original (`pqub.altimeter` `0.0.4`) falhar com `Language Server not found`. Este projeto cria e mantém o **MedidorTokens**, corrigindo o núcleo de leitura para ler diretamente os logs `transcript.jsonl` em `~/.gemini/antigravity/brain/` e adicionando 12 etapas completas de monitoramento de tokens, cotas e estatísticas.
 
 ---
 
@@ -42,7 +43,7 @@ Na versão 2.6.0 do Antigravity IDE, a substituição do processo legado `langua
 ## Como Instalar
 
 ### Opção 1: Instalar via `.vsix` no Antigravity IDE (Recomendado)
-1. Baixe o arquivo [`altimeter-0.1.0-agy2.6-fix.vsix`](./altimeter-0.1.0-agy2.6-fix.vsix).
+1. Baixe o arquivo [`medidortokens-0.1.0-agy2.6-fix.vsix`](./medidortokens-0.1.0-agy2.6-fix.vsix).
 2. No Antigravity IDE, abra **Extensions** (`Ctrl + Shift + X`).
 3. Clique em **`...`** → **`Install from VSIX...`** e selecione o arquivo `.vsix`.
 4. Pressione `Ctrl + Shift + P` e execute **`Developer: Reload Window`**.
@@ -68,7 +69,7 @@ node "./gerar_pacote.js"
 ├── LEIA-ME.md                         # Guia rápido de instalação em pt-BR
 ├── Inicio.md                          # Visão técnica e fluxo de manutenção
 ├── Plano_Melhorias.md                 # Registro detalhado das 12 etapas
-├── altimeter-0.1.0-agy2.6-fix.vsix    # Pacote instalador oficial v0.1.0
+├── medidortokens-0.1.0-agy2.6-fix.vsix # Pacote instalador oficial v0.1.0
 ├── gerar_pacote.js                    # Script Node.js gerador do .vsix (zlib nativo)
 ├── instalar_correcao_altimeter.bat    # Instalador rápido para Windows
 └── dist_altimeter_corrigido/
