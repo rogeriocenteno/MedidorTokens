@@ -1,0 +1,59 @@
+# =============================================================
+# .gitignore — MedidorTokens (Extensão Altimeter)
+# Atualizado em 18/11/2026
+# =============================================================
+
+# -----------------------------------------------------------
+# CREDENCIAIS E CONFIGURAÇÕES SENSÍVEIS — NUNCA versionar
+# -----------------------------------------------------------
+.env
+.env.*
+credenciais.md
+Credenciais.md
+*credentials*.json
+*token*.json
+*secret*.json
+
+# -----------------------------------------------------------
+# BACKUPS LOCAIS E TEMPORÁRIOS — NUNCA versionar
+# -----------------------------------------------------------
+backup_altimeter_0.0.4/
+backups/
+*.bak
+*.bak*
+PRE_RESTORE_*
+
+# -----------------------------------------------------------
+# PACOTES ANTIGOS E COMPACTADOS LEGADOS
+# (O pacote oficial atual altimeter-0.1.0-agy2.6-fix.vsix É versionado)
+# -----------------------------------------------------------
+altimeter-0.0.4*.vsix
+altimeter-0.0.5*.vsix
+altimeter-0.0.6*.vsix
+*.zip
+
+# -----------------------------------------------------------
+# NODE.JS / LOGS / TESTES LOCAIS
+# -----------------------------------------------------------
+node_modules/
+npm-debug.log*
+*.log
+transcript*.jsonl
+*.pbtxt
+
+# -----------------------------------------------------------
+# SISTEMA OPERACIONAL
+# -----------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+nul
+
+# -----------------------------------------------------------
+# IDEs E TEMPORÁRIOS / ARQUIVOS ORIGINAIS DE LOGO LOCAIS
+# -----------------------------------------------------------
+.idea/
+*.swp
+*.tmp
+scratch/
+Logo*.jpg
