@@ -22,6 +22,10 @@ Este projeto mantém, aprimora e distribui a extensão **MedidorTokens** (`roger
   `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.0\dist\extension.js`
 * **Logs de sessão do Antigravity lidos pela extensão:**  
   `%USERPROFILE%\.gemini\antigravity\brain\<cascade-id>\.system_generated\logs\transcript.jsonl`
+* **Página Oficial no Open VSX Registry:**  
+  `https://open-vsx.org/extension/rogeriocenteno/medidortokens`
+* **Release Oficial v0.1.0 no GitHub:**  
+  `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.0`
 
 ---
 
@@ -101,7 +105,9 @@ O arquivo `dist/extension.js` é um bundle minificado gerado via esbuild. Ao rea
 ├── instalar_correcao_altimeter.bat       <-- Script batch para instalação rápida no Windows
 │
 ├── dist_altimeter_corrigido\
-│   └── extension.js                      <-- Cópia espelhada do extension.js para o VSIX
+│   ├── extension.js                      <-- Cópia espelhada do extension.js para o VSIX
+│   ├── icon.png                          <-- Ícone oficial 256x256 PNG da extensão
+│   └── Pub_OpenVSX.md                    <-- Guia completo de publicação no Open VSX Registry e VS Code Marketplace
 │
 └── backup_altimeter_0.0.4\               <-- Backups incrementais de segurança
     ├── backup_antes_etapa_01.js.bak
@@ -150,8 +156,8 @@ node "./gerar_pacote.js"
 Solicite ao usuário executar o recarregamento da janela no Antigravity IDE:
 > Pressione **`Ctrl + Shift + P`** (ou `F1`) e execute **`Developer: Reload Window`**.
 
-### Passo 6: Versionar no Git (`develop`)
-Após validação do usuário, siga o fluxo de versionamento em [`Git_Rotina_Versionamento.md`](./Git_Rotina_Versionamento.md) na branch `develop` (consulte [`Git_Implantacao_GitHub.md`](./Git_Implantacao_GitHub.md) caso ainda vá configurar o ambiente Git). Sempre revise `git diff --stat --cached` antes do `git commit` e promova para `main` ao concluir marcos importantes.
+### Passo 6: Versionar no Git (`develop`) e Publicar
+Após validação do usuário, siga o fluxo de versionamento em [`Git_Rotina_Versionamento.md`](./Git_Rotina_Versionamento.md) na branch `develop` (consulte [`Git_Implantacao_GitHub.md`](./Git_Implantacao_GitHub.md) caso ainda vá configurar o ambiente Git). Sempre revise `git diff --stat --cached` antes do `git commit`, promova para `main` ao concluir marcos importantes e utilize [`dist_altimeter_corrigido/Pub_OpenVSX.md`](./dist_altimeter_corrigido/Pub_OpenVSX.md) para publicar novas versões no Open VSX Registry.
 
 #### Política Obrigatória de Segurança para Repositório Público
 Como este repositório é **público**, todo arquivo alterado e todo commit **DEVEM** obedecer estritamente às regras abaixo:

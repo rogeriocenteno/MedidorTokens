@@ -170,3 +170,4 @@ node "./gerar_pacote.js"
 - **Após concluir e validar uma etapa completa** registrada em [Plano_Melhorias.md](./Plano_Melhorias.md)
 - **Sempre que uma nova versão estável do pacote `.vsix`** estiver pronta para distribuição
 - Seguir sempre a sequência: commit em `develop` → merge em `main` → push `main` → voltar para `develop`
+- Ao fechar nova versão estável, criar a tag/Release no GitHub e publicar o novo `.vsix` no Open VSX Registry (`npx --yes ovsx publish`) seguindo [`dist_altimeter_corrigido/Pub_OpenVSX.md`](./dist_altimeter_corrigido/Pub_OpenVSX.md)

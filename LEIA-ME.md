@@ -33,8 +33,10 @@
 ## Repositório e versionamento
 
 - **GitHub (Público):** `https://github.com/rogeriocenteno/MedidorTokens` — desenvolvimento em `develop`, versões estáveis e releases em `main`.
-- Guias: `Git_Implantacao_GitHub.md` (implantação inicial) e `Git_Rotina_Versionamento.md` (rotina diária).
-- Documentação técnica e fluxo de trabalho: `Inicio.md` e `Plano_Melhorias.md`.
+- **Open VSX Registry:** `https://open-vsx.org/extension/rogeriocenteno/medidortokens`
+- **Release Oficial v0.1.0:** `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.0`
+- **Guias de versionamento e publicação:** `Git_Implantacao_GitHub.md`, `Git_Rotina_Versionamento.md` e `dist_altimeter_corrigido/Pub_OpenVSX.md` (publicação no Open VSX Registry).
+- **Documentação técnica e fluxo de trabalho:** `Inicio.md` e `Plano_Melhorias.md`.
 
 ---
 
