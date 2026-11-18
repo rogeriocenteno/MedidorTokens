@@ -4,7 +4,8 @@
 > **Última atualização:** 18/11/2026 (Versão `0.1.0`)  
 > **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
 > **Fuso horário obrigatório do projeto:** `America/Sao_Paulo` (`UTC-3`)  
-> **Idioma oficial de interface, código e documentação:** Português do Brasil (`pt-BR`)
+> **Idioma oficial de interface, código e documentação:** Português do Brasil (`pt-BR`)  
+> **Visibilidade do repositório:** **PÚBLICO** (`https://github.com/rogeriocenteno/MedidorTokens`) — **NUNCA incluir dados pessoais, e-mails privados ou caminhos absolutos da máquina local**
 
 ---
 
@@ -150,7 +151,14 @@ Solicite ao usuário executar o recarregamento da janela no Antigravity IDE:
 > Pressione **`Ctrl + Shift + P`** (ou `F1`) e execute **`Developer: Reload Window`**.
 
 ### Passo 6: Versionar no Git (`develop`)
-Após validação do usuário, siga o fluxo de versionamento em [`Git_Rotina_Versionamento.md`](./Git_Rotina_Versionamento.md) na branch `develop` (consulte [`Git_Implantacao_GitHub.md`](./Git_Implantacao_GitHub.md) caso ainda vá fazer o primeiro commit/push do repositório). Sempre revise `git diff --stat --cached` antes do `git commit` e promova para `main` ao concluir marcos importantes.
+Após validação do usuário, siga o fluxo de versionamento em [`Git_Rotina_Versionamento.md`](./Git_Rotina_Versionamento.md) na branch `develop` (consulte [`Git_Implantacao_GitHub.md`](./Git_Implantacao_GitHub.md) caso ainda vá configurar o ambiente Git). Sempre revise `git diff --stat --cached` antes do `git commit` e promova para `main` ao concluir marcos importantes.
+
+#### Política Obrigatória de Segurança para Repositório Público
+Como este repositório é **público**, todo arquivo alterado e todo commit **DEVEM** obedecer estritamente às regras abaixo:
+* **Zero caminhos absolutos locais:** Nunca incluir caminhos com nome de usuário ou diretórios específicos da máquina (ex.: `C:\Users\<usuario>\...`, `d:\...`); usar sempre `%USERPROFILE%`, `~`, `os.homedir()`, `__dirname` ou caminhos relativos (`./`).
+* **Zero dados privados:** Nunca incluir e-mails pessoais reais, tokens, chaves, senhas, logs de sessão ou nomes de outros projetos privados em código, documentação ou mensagens de commit.
+* **Identidade de commit pública:** Manter o e-mail de autor Git configurado no repositório como `rogeriocenteno@users.noreply.github.com`.
+* **Auditoria pré-commit obrigatória:** Executar sempre a verificação automatizada de dados sensíveis e revisar `git diff --stat --cached` antes de cada `git commit`.
 
 ---
 

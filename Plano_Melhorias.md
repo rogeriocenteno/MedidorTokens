@@ -6,7 +6,7 @@
 **Idioma padrão da interface e documentação:** Português do Brasil (`pt-BR`)  
 **Arquivo-alvo principal:** `./dist_altimeter_corrigido/extension.js` (sincronizado pelo `gerar_pacote.js` com `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.altimeter-0.1.0\dist\extension.js`)  
 **Pasta de backups e pacotes do projeto:** `./` (raiz do projeto)  
-**Repositório:** `https://github.com/rogeriocenteno/MedidorTokens` (branch de trabalho `develop`)
+**Repositório:** `https://github.com/rogeriocenteno/MedidorTokens` (**PÚBLICO** — branch de trabalho `develop`, releases em `main`)
 
 ---
 
@@ -17,6 +17,7 @@
    - **Exibição ao usuário (UI, tabelas, gráficos, exportação):** Formato Brasileiro `DD/MM/AAAA` (ou `DD/MM/AAAA HH:mm`), convertido para o fuso horário `America/Sao_Paulo` (`UTC-3`).
    - **Processamento interno e chaves de ordenação:** Formato Americano `YYYY-MM-DD`.
 4. **Suporte a Caracteres Acentuados (`UTF-8`):** Garantir codificação `UTF-8` correta para caracteres acentuados (`á, é, í, ó, ú, ã, õ, â, ê`) e `ç/Ç` tanto no HTML das Webviews quanto na exportação de arquivos.
+5. **Política de Segurança e Privacidade (Repositório Público):** Como o repositório é **público**, é estritamente proibido incluir caminhos locais absolutos da máquina (com nome de usuário ou drive local), e-mails pessoais, credenciais ou menções a outros projetos privados em qualquer arquivo ou commit. Utilize sempre caminhos relativos (`./`) ou variáveis de ambiente (`%USERPROFILE%`, `os.homedir()`), mantenha a identidade Git `rogeriocenteno@users.noreply.github.com` e execute auditoria pré-commit antes de enviar alterações.
 
 ---
 

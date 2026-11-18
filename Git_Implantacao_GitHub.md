@@ -58,7 +58,7 @@ Caso precise conferir os parâmetros ou recriar em outro momento:
 2. Configurações do repositório:
    - **Repository name:** `MedidorTokens`
    - **Description:** `Extensão Altimeter aprimorada para monitoramento de tokens e cotas em tempo real no Antigravity IDE 2.6.0+`
-   - **Visibility:** ✅ **Private**
+   - **Visibility:** ✅ **Public** (Repositório Público — exige sanitização total de caminhos locais, e-mails e segredos em todos os commits e ativação de Secret Protection / Push Protection em Settings → Advanced Security)
    - ❌ Não inicialize com arquivos adicionais caso vá conectar um histórico local existente
 3. URL SSH de conexão:
    ```text
@@ -191,6 +191,9 @@ git status --short | Select-String "0\.0\.4|0\.0\.5|0\.0\.6"
 
 # Verificar que logs/transcripts locais NÃO estão sendo rastreados
 git status --short | Select-String "transcript|\.log|\.pbtxt"
+
+# Verificar que não há caminhos locais com usuário ou e-mails pessoais nos arquivos rastreados
+git grep -iE "gmail\.com|C:\\\\Users\\\\" -- ':!*.vsix' ':!*.png'
 ```
 
 Nenhum resultado = ✅ seguro para commitar.

@@ -31,7 +31,7 @@
 
 ## Repositório e versionamento
 
-- **GitHub:** `https://github.com/rogeriocenteno/MedidorTokens` — desenvolvimento em `develop`, versões estáveis em `main`.
+- **GitHub (Público):** `https://github.com/rogeriocenteno/MedidorTokens` — desenvolvimento em `develop`, versões estáveis e releases em `main`.
 - Guias: `Git_Implantacao_GitHub.md` (implantação inicial) e `Git_Rotina_Versionamento.md` (rotina diária).
 - Documentação técnica e fluxo de trabalho: `Inicio.md` e `Plano_Melhorias.md`.
 

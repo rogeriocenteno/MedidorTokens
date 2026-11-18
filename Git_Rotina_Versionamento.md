@@ -1,7 +1,8 @@
 # Git_Rotina_Versionamento.md — Rotina Diária de Versionamento
 
 > **Projeto:** MedidorTokens — Extensão Altimeter (Antigravity IDE 2.6.0+)  
-> **Repositório:** https://github.com/rogeriocenteno/MedidorTokens  
+> **Repositório:** https://github.com/rogeriocenteno/MedidorTokens (**PÚBLICO**)  
+> **Identidade Git obrigatória:** `Rogério Centeno <rogeriocenteno@users.noreply.github.com>`  
 > **Branch de trabalho:** `develop` (sempre trabalhar nesta branch)  
 > **Branch de produção/estável:** `main` (atualizar apenas em marcos importantes — fim de etapa ou nova versão `.vsix` validada)
 
@@ -40,11 +41,18 @@ git add .
 ```powershell
 git diff --stat --cached
 ```
-> Revise a lista de arquivos. Confirme que **nenhum arquivo sensível ou temporário** está incluído:
+> Revise a lista de arquivos. Confirme que **nenhum arquivo sensível ou temporário** está incluído e que **não há vazamento de dados privados para o repositório público**:
 > - `credenciais.md` / `.env` — credenciais e variáveis sensíveis
 > - `backup_altimeter_0.0.4/` / `*.bak*` — backups locais incrementais
 > - `altimeter-0.0.4*.vsix` / `altimeter-0.0.5*.vsix` / `altimeter-0.0.6*.vsix` — pacotes legados
-> - `transcript*.jsonl` / `*.log` — logs locais de sessão
+> - `Logo*.jpg` / `transcript*.jsonl` / `*.log` — mídias locais e logs de sessão
+> - Caminhos absolutos da máquina local (`C:\Users\<usuario>\...`, drives locais), e-mails pessoais reais ou menções a outros projetos privados
+
+#### Auditoria Pré-Commit (Obrigatória em Repositório Público)
+```powershell
+node -e "const fs=require('fs'),cp=require('child_process'); const files=cp.execSync('git diff --cached --name-only').toString().trim().split(/\r?\n/).filter(Boolean); const re=/[a-z0-9._%+-]+@gmail\.com|Users[\\\/][a-z0-9_-]+/i; console.log(files.filter(f=>fs.existsSync(f)&&!f.endsWith('.vsix')&&!f.endsWith('.png')&&re.test(fs.readFileSync(f,'utf8'))));"
+```
+*(Deve retornar `[]` antes de prosseguir com o `git commit`).*
 
 ### Passo 4 — Commitar com mensagem descritiva
 ```powershell
@@ -130,11 +138,12 @@ git remote -v
 ## ⚠️ Regras Importantes
 
 - **Nunca trabalhar diretamente na branch `main`** — todo desenvolvimento vai em `develop`
+- **Repositório Público — tolerância zero com dados privados:** nunca commitar caminhos locais absolutos com nome de usuário (`C:\Users\<usuario>\...`), e-mails pessoais (usar sempre `rogeriocenteno@users.noreply.github.com`) nem nomes de outros projetos privados
 - **Nunca commitar `credenciais.md` ou `.env`** — estão protegidos pelo `.gitignore`, mas confirme sempre
 - **Nunca commitar a pasta `backup_altimeter_0.0.4/` nem arquivos `*.bak*`** — os backups locais servem para rollback rápido na máquina, enquanto o histórico completo já fica no Git
-- **Nunca commitar pacotes `.vsix` antigos (`0.0.4` / `0.0.5` / `0.0.6`) nem arquivos `transcript*.jsonl`**
+- **Nunca commitar pacotes `.vsix` antigos (`0.0.4` / `0.0.5` / `0.0.6`) nem arquivos `transcript*.jsonl` ou `Logo*.jpg`**
 - **SEMPRE validar sintaxe (`node -c`) e sincronizar o `.vsix` (`node gerar_pacote.js`) antes de commitar alterações de código**
-- **SEMPRE executar `git diff --stat --cached` antes de `git commit`** para confirmar visualmente o que será versionado
+- **SEMPRE executar a auditoria pré-commit e `git diff --stat --cached` antes de `git commit`** para confirmar visualmente o que será versionado
 
 ---
 
