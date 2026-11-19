@@ -42,7 +42,7 @@ Language Server not found
 
 ---
 
-## 3. Resumo das Melhorias Implementadas (Etapas 1 a 12)
+## 3. Resumo das Melhorias Implementadas (Etapas 1 a 13)
 
 | Etapa | Funcionalidade | Descrição Técnica |
 | :---: | :--- | :--- |
@@ -58,6 +58,7 @@ Language Server not found
 | **10** | **Alinhamento Nativo e Reciclagem sem Congelamento** | Exibição em `% Restante` (idêntico à tela nativa do Antigravity), estimativa de desgaste dinâmico em tempo real (`_estimateLiveQuota`), calibração do modelo Argon com peso de cache reduzido, rollover contínuo sem travar em 100% e normalização dos nomes de modelos. |
 | **11** | **Suporte a Contas Free / Starter Quota e Gestão de Contas** | Alternância com 1 clique entre **Google AI Pro** e **Antigravity Starter Quota (Free)** por conta, ocultação dinâmica dos limites de 5h e Argon para contas Starter, formulário simplificado de cotas para Starter, taxas de desgaste calibradas por plano e botões `+` e `×` para adicionar e remover contas. |
 | **12** | **Modelo `Orchestrator (Argon)` e Coleta Automática de Cotas** | Registro do modelo `Orchestrator (Argon)` (`gemini-pro-orchestrator-g1-pro`) agrupado na família Argon (`_getQuotaGroup`), e sincronização automática em segundo plano (`_autoSyncQuotasFromIDE`, throttle 30s + botão `🔄 Auto`) via `google.google-antigravity` / `LanguageServerService` (`GetUserStatus` e `RetrieveUserQuotaSummary`) atualizando `% Restante`, `resetAt`, e-mail da conta ativa e plano (`Pro`/`Free`). |
+| **13** | **Identidade MedidorTokens e Publicação no Open VSX (v0.1.1)** | Renomeação completa para `MedidorTokens` (`rogeriocenteno.medidortokens`), conversão do ícone oficial `256x256` PNG, redução de `engines.vscode` para `^1.80.0` (compatibilidade com qualquer build do Antigravity IDE), adição das tags de busca (`medidor`, `medidortokens`, `tokens`, `cotas`) e guia de publicação em `dist_altimeter_corrigido/Pub_OpenVSX.md`. |
 
 ---
 

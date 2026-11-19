@@ -40,21 +40,27 @@
 
 ---
 
-## Como instalar (3 opções)
+## Como instalar (4 opções)
 
-### Forma A: Instalar o pacote `.vsix` direto pelo Antigravity IDE (Recomendado)
+### Forma A: Instalar direto pelo Open VSX / Extensions da IDE (Mais Simples)
+1. Abra o **Antigravity IDE** (ou IDE compatível com Open VSX).
+2. Abra a aba **Extensions** (`Ctrl + Shift + X`).
+3. Pesquise por **`MedidorTokens`** ou **`rogeriocenteno.medidortokens`**.
+4. Clique em **Install** e recarregue a janela se solicitado (`Ctrl + Shift + P` → `Developer: Reload Window`).
+
+### Forma B: Instalar o pacote `.vsix` direto pelo Antigravity IDE
 1. Abra o **Antigravity IDE**.
 2. Abra a aba **Extensions** (`Ctrl + Shift + X`).
 3. Clique no menu de três pontos **`...`** (no canto superior direito da barra de extensões) e selecione **`Install from VSIX...`**.
 4. Selecione o arquivo **`medidortokens-0.1.1-agy2.6-fix.vsix`**.
 5. Recarregue a janela (`Ctrl + Shift + P` → `Developer: Reload Window`).
 
-### Forma B: Instalador automático de 1 clique (Windows)
+### Forma C: Instalador automático de 1 clique (Windows)
 1. Dê dois cliques em **`instalar_correcao_altimeter.bat`**.
 2. O script detecta automaticamente a instalação do MedidorTokens (ou da base anterior), salva backup do arquivo anterior e copia a versão atualizada.
 3. No Antigravity IDE, pressione `Ctrl + Shift + P` e execute **`Developer: Reload Window`**.
 
-### Forma C: Substituição manual do arquivo `extension.js`
+### Forma D: Substituição manual do arquivo `extension.js`
 1. Copie o arquivo `dist_altimeter_corrigido\extension.js`.
 2. Cole substituindo o arquivo existente na sua pasta de extensões:
    `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.1\dist\extension.js`  

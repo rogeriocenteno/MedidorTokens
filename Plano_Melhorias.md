@@ -39,7 +39,7 @@
 
 ---
 
-## Detalhamento Técnico das 12 Etapas de Melhoria (todas concluídas)
+## Detalhamento Técnico das 13 Etapas de Melhoria (todas concluídas)
 
 ---
 
@@ -214,6 +214,16 @@
      - Detecta automaticamente o e-mail da conta logada na IDE e seu plano (`Google AI Pro` vs `Antigravity Starter Quota`), respeitando alternâncias manuais até que o usuário clique em `🔄 Auto`.
      - Atualiza automaticamente `% Restante`, `resetAt` e reinicia `savedAt` no instante da sincronização para evitar desconto duplicado, mantendo throttling leve de 30 segundos em segundo plano.
   3. **Controles na Interface (`🔄 Auto` e indicador `✓`):** Botão `🔄 Auto` ao lado de `⚙ Cotas` para sincronização manual instantânea e selo `✓` no rodapé de cada barra sincronizada automaticamente.
+
+---
+
+### Etapa 13: Identidade `MedidorTokens`, Publicação no Open VSX Registry e Compatibilidade `engines.vscode: "^1.80.0"` (`v0.1.0` / `v0.1.1`)
+- **Status:** ✅ Concluído e publicado no Open VSX (`0.1.1`)
+- **Objetivo:** Consolidar a identidade própria da extensão, distribuí-la publicamente pelo Open VSX Registry (`rogeriocenteno.medidortokens`) e garantir visibilidade/instalação pelo Marketplace em qualquer build do Antigravity IDE (2.6.x / 2.7.x+) e derivados.
+- **Implementações (`v0.1.0` → `v0.1.1`):**
+  1. **Migração de Identificador e Namespace (`rogeriocenteno.medidortokens`):** Renomeação de comandos (`medidortokens.refresh`, `medidortokens.openStatistics`), views (`medidortokens.mainView`), configurações (`medidortokens.*`), CSVs e chaves de `globalState`, com ícone oficial `256x256` PNG (`dist_altimeter_corrigido/icon.png`).
+  2. **Publicação e Reivindicação de Propriedade no Open VSX Registry:** Aceite do *Eclipse Open VSX Publisher Agreement*, abertura da Issue `#15942` de *Claim Ownership* para o namespace `rogeriocenteno` e registro do guia completo em `./dist_altimeter_corrigido/Pub_OpenVSX.md`.
+  3. **Compatibilidade Ampliada e Indexação de Busca (`v0.1.1`):** Redução de `engines.vscode` de `^1.107.0` para `^1.80.0` em `package.json` e `.vsixmanifest` (evitando ocultação em IDEs com núcleo `< 1.107.0`), além de adição das tags `medidor`, `medidortokens`, `tokens`, `cotas` e descrição iniciando com `"Medidor de tokens..."`.
 
 
 ---
