@@ -1,9 +1,9 @@
 # MedidorTokens — Monitor de Tokens e Cotas para Antigravity IDE 2.6.0+
 
-**Versão:** 0.1.1  
+**Versão:** 0.1.2  
 **Identificador:** `rogeriocenteno.medidortokens`  
 **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
-**Data da atualização:** 18/11/2026  
+**Data da atualização:** 19/11/2026  
 **Compatibilidade:** Antigravity IDE 2.6.0 ou superior (com retrocompatibilidade para versões anteriores)  
 **Fuso horário:** `America/Sao_Paulo` (`UTC-3`) | **Idioma:** Português do Brasil (`pt-BR`)
 
@@ -14,7 +14,7 @@
 1. **Correção do Núcleo Antigravity 2.6.0+:** Elimina o erro `Language Server not found`, lendo diretamente os logs de transcript do Antigravity em `~/.gemini/antigravity/brain/`.
 2. **Monitoramento de Janelas e Cotas (5h e 7d) com Coleta Automática:**
    - **Sincronização Automática com a IDE (`🔄 Auto`):** Coleta automaticamente do servidor local do Antigravity IDE o e-mail da conta ativa, o plano (`Google AI Pro` ou `Starter Free`), a porcentagem restante (`% Restante`) e os horários exatos de renovação (`resetAt`), mantendo ainda a opção `⚙ Cotas` para ajustes manuais.
-   - Agrupamento nativo idêntico à tela do IDE: **Gemini Models**, **Claude and GPT models** e **Gemini 4 Argon / Orchestrator** (incluindo o novo modelo **Orchestrator (Argon)** / `gemini-pro-orchestrator-g1-pro`).
+   - Agrupamento nativo idêntico à tela do IDE: **Gemini Models** (incluindo o novo modelo **Gemini 4 Neon** — `Extra`, `High`, `Medium`, `Low`), **Claude and GPT models** e **Gemini 4 Argon / Orchestrator** (incluindo o modelo **Orchestrator (Argon)** / `gemini-pro-orchestrator-g1-pro`).
    - Formato nativo em **`% Restante`** com indicador discreto de **`% Usado`** e indicador `✓` quando sincronizado automaticamente.
    - Contagem regressiva em tempo real com badges visuais para renovação (`resetAt`).
    - Rollover automático de ciclo (renovação contínua de cota sem congelar em 100%).
@@ -34,7 +34,7 @@
 
 - **GitHub (Público):** `https://github.com/rogeriocenteno/MedidorTokens` — desenvolvimento em `develop`, versões estáveis e releases em `main`.
 - **Open VSX Registry:** `https://open-vsx.org/extension/rogeriocenteno/medidortokens`
-- **Release Oficial v0.1.1:** `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.1`
+- **Release Oficial v0.1.2:** `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.2`
 - **Guias de versionamento e publicação:** `Git_Implantacao_GitHub.md`, `Git_Rotina_Versionamento.md` e `dist_altimeter_corrigido/Pub_OpenVSX.md` (publicação no Open VSX Registry).
 - **Documentação técnica e fluxo de trabalho:** `Inicio.md` e `Plano_Melhorias.md`.
 
@@ -52,7 +52,7 @@
 1. Abra o **Antigravity IDE**.
 2. Abra a aba **Extensions** (`Ctrl + Shift + X`).
 3. Clique no menu de três pontos **`...`** (no canto superior direito da barra de extensões) e selecione **`Install from VSIX...`**.
-4. Selecione o arquivo **`medidortokens-0.1.1-agy2.6-fix.vsix`**.
+4. Selecione o arquivo **`medidortokens-0.1.2-agy2.6-fix.vsix`**.
 5. Recarregue a janela (`Ctrl + Shift + P` → `Developer: Reload Window`).
 
 ### Forma C: Instalador automático de 1 clique (Windows)
@@ -63,7 +63,7 @@
 ### Forma D: Substituição manual do arquivo `extension.js`
 1. Copie o arquivo `dist_altimeter_corrigido\extension.js`.
 2. Cole substituindo o arquivo existente na sua pasta de extensões:
-   `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.1\dist\extension.js`  
+   `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.2\dist\extension.js`  
    *(ou na pasta correspondente à versão instalada)*.
 3. Recarregue a janela do Antigravity IDE (`Ctrl + Shift + P` → `Developer: Reload Window`).
 

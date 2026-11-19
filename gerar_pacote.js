@@ -5,7 +5,7 @@ const zlib = require('zlib');
 
 const targetName = 'medidortokens';
 const targetDisplayName = 'MedidorTokens';
-const targetVersion = '0.1.1';
+const targetVersion = '0.1.2';
 const targetPublisher = 'rogeriocenteno';
 const targetEngine = '^1.80.0';
 const targetKeywords = [

@@ -1,10 +1,10 @@
 # Plano de Melhorias — Extensão MedidorTokens (Antigravity IDE 2.6.0+)
 
-**Versão atual:** `0.1.1` | **Identificador:** `rogeriocenteno.medidortokens` | **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
-**Data de criação do plano:** 28/10/2026  
+**Versão atual:** `0.1.2` | **Identificador:** `rogeriocenteno.medidortokens` | **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
+**Data de criação do plano:** 28/10/2026 | **Última atualização:** 19/11/2026  
 **Fuso horário padrão do projeto:** `UTC-3` (`America/Sao_Paulo`)  
 **Idioma padrão da interface e documentação:** Português do Brasil (`pt-BR`)  
-**Arquivo-alvo principal:** `./dist_altimeter_corrigido/extension.js` (sincronizado pelo `gerar_pacote.js` com `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.1\dist\extension.js`)  
+**Arquivo-alvo principal:** `./dist_altimeter_corrigido/extension.js` (sincronizado pelo `gerar_pacote.js` com `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.2\dist\extension.js`)  
 **Pasta de backups e pacotes do projeto:** `./` (raiz do projeto)  
 **Repositório:** `https://github.com/rogeriocenteno/MedidorTokens` (**PÚBLICO** — branch de trabalho `develop`, releases em `main`)  
 **Open VSX Registry:** `https://open-vsx.org/extension/rogeriocenteno/medidortokens` | **Guia de Publicação:** `./dist_altimeter_corrigido/Pub_OpenVSX.md`
@@ -39,7 +39,7 @@
 
 ---
 
-## Detalhamento Técnico das 13 Etapas de Melhoria (todas concluídas)
+## Detalhamento Técnico das 14 Etapas de Melhoria (todas concluídas)
 
 ---
 
@@ -225,6 +225,16 @@
   2. **Publicação e Reivindicação de Propriedade no Open VSX Registry:** Aceite do *Eclipse Open VSX Publisher Agreement*, abertura da Issue `#15942` de *Claim Ownership* para o namespace `rogeriocenteno` e registro do guia completo em `./dist_altimeter_corrigido/Pub_OpenVSX.md`.
   3. **Compatibilidade Ampliada e Indexação de Busca (`v0.1.1`):** Redução de `engines.vscode` de `^1.107.0` para `^1.80.0` em `package.json` e `.vsixmanifest` (evitando ocultação em IDEs com núcleo `< 1.107.0`), além de adição das tags `medidor`, `medidortokens`, `tokens`, `cotas` e descrição iniciando com `"Medidor de tokens..."`.
 
+---
+
+### Etapa 14: Suporte ao Novo Modelo `Gemini 4 Neon` (`v0.1.2`)
+- **Status:** ✅ Concluído
+- **Objetivo:** Registrar oficialmente o novo modelo **Gemini 4 Neon** (disponível em contas pagas / Google AI Pro) com todas as suas variantes de raciocínio, cores exclusivas e normalização de slugs, mantendo sua contabilização integrada à cota compartilhada **Gemini Models** (`5h / 7d`).
+- **Implementações (`v0.1.2`):**
+  1. **Registro em `sa` (cores dedicadas e ordenação logo após `Gemini 4 Argon`):** Inclusão de `Gemini 4 Neon (Extra)` (`#C2185B`), `Gemini 4 Neon (High)` (`#E52592`), `Gemini 4 Neon (Medium)` (`#F538A0`), `Gemini 4 Neon (Low)` (`#F48FB1`) e `Gemini 4 Neon` (`#E52592`).
+  2. **Normalização de Slugs em `saSlugMap`:** Mapeamento de `gemini-4-neon-extra`, `gemini-4-neon-extra-high`, `gemini 4 neon (extra high)`, `gemini-4-neon-high`, `gemini-4-neon-medium`, `gemini-4-neon-low` e `gemini-4-neon`.
+  3. **Integração de Cotas (`Gemini Models`):** Confirmado o agrupamento automático em `gemini` (`5h / 7d`) sem afetar a interface adaptativa de contas Starter (Free).
+
 
 ---
 
@@ -240,5 +250,5 @@ Ordem seguida na implantação das primeiras etapas (menor para maior impacto vi
 7. **Etapa 7** — Contador na Barra de Status inferior da IDE (`Status Bar`).
 8. **Etapa 8** — Filtro de período (8, 15, 30 dias, Tudo) e exportação CSV na janela de estatísticas.
 
-> **Observação:** Após concluir qualquer etapa, execute `node gerar_pacote.js` na pasta raiz do projeto (`./`) para sincronizar a extensão instalada e atualizar o instalador `medidortokens-0.1.1-agy2.6-fix.vsix`. Depois, versione em `develop` conforme `Git_Rotina_Versionamento.md` e, ao publicar nova versão no Open VSX Registry, siga `./dist_altimeter_corrigido/Pub_OpenVSX.md`.
+> **Observação:** Após concluir qualquer etapa, execute `node gerar_pacote.js` na pasta raiz do projeto (`./`) para sincronizar a extensão instalada e atualizar o instalador `medidortokens-0.1.2-agy2.6-fix.vsix`. Depois, versione em `develop` conforme `Git_Rotina_Versionamento.md` e, ao publicar nova versão no Open VSX Registry, siga `./dist_altimeter_corrigido/Pub_OpenVSX.md`.
 
