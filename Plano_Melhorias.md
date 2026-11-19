@@ -1,10 +1,10 @@
 # Plano de Melhorias — Extensão MedidorTokens (Antigravity IDE 2.6.0+)
 
-**Versão atual:** `0.1.0` | **Identificador:** `rogeriocenteno.medidortokens` | **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
+**Versão atual:** `0.1.1` | **Identificador:** `rogeriocenteno.medidortokens` | **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
 **Data de criação do plano:** 28/10/2026  
 **Fuso horário padrão do projeto:** `UTC-3` (`America/Sao_Paulo`)  
 **Idioma padrão da interface e documentação:** Português do Brasil (`pt-BR`)  
-**Arquivo-alvo principal:** `./dist_altimeter_corrigido/extension.js` (sincronizado pelo `gerar_pacote.js` com `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.0\dist\extension.js`)  
+**Arquivo-alvo principal:** `./dist_altimeter_corrigido/extension.js` (sincronizado pelo `gerar_pacote.js` com `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.1\dist\extension.js`)  
 **Pasta de backups e pacotes do projeto:** `./` (raiz do projeto)  
 **Repositório:** `https://github.com/rogeriocenteno/MedidorTokens` (**PÚBLICO** — branch de trabalho `develop`, releases em `main`)  
 **Open VSX Registry:** `https://open-vsx.org/extension/rogeriocenteno/medidortokens` | **Guia de Publicação:** `./dist_altimeter_corrigido/Pub_OpenVSX.md`
@@ -230,5 +230,5 @@ Ordem seguida na implantação das primeiras etapas (menor para maior impacto vi
 7. **Etapa 7** — Contador na Barra de Status inferior da IDE (`Status Bar`).
 8. **Etapa 8** — Filtro de período (8, 15, 30 dias, Tudo) e exportação CSV na janela de estatísticas.
 
-> **Observação:** Após concluir qualquer etapa, execute `node gerar_pacote.js` na pasta raiz do projeto (`./`) para sincronizar a extensão instalada e atualizar o instalador `medidortokens-0.1.0-agy2.6-fix.vsix`. Depois, versione em `develop` conforme `Git_Rotina_Versionamento.md` e, ao publicar nova versão no Open VSX Registry, siga `./dist_altimeter_corrigido/Pub_OpenVSX.md`.
+> **Observação:** Após concluir qualquer etapa, execute `node gerar_pacote.js` na pasta raiz do projeto (`./`) para sincronizar a extensão instalada e atualizar o instalador `medidortokens-0.1.1-agy2.6-fix.vsix`. Depois, versione em `develop` conforme `Git_Rotina_Versionamento.md` e, ao publicar nova versão no Open VSX Registry, siga `./dist_altimeter_corrigido/Pub_OpenVSX.md`.
 

@@ -21,11 +21,13 @@ Todos os metadados abaixo são **públicos** e foram utilizados na publicação 
 | **Name (`name` / ID técnico)** | `medidortokens` | Sem pontos, espaços ou maiúsculas (regra obrigatória do `package.json`) |
 | **Publisher / Namespace** | `rogeriocenteno` | Idêntico ao usuário GitHub para facilitar comprovação de propriedade |
 | **ID Completo da Extensão** | `rogeriocenteno.medidortokens` | Formato `<publisher>.<name>` |
-| **Versão Inicial Publicada** | `0.1.0` | Versionamento semântico (`MAJOR.MINOR.PATCH`) |
-| **Arquivo `.vsix` Publicado** | `medidortokens-0.1.0-agy2.6-fix.vsix` | Tamanho: `293.972` bytes (~`287 KB`) |
+| **Versão Atual (em Publicação)** | `0.1.1` | Ajuste de `engines.vscode: "^1.80.0"` e tags de busca `medidor` (versão inicial publicada: `0.1.0`) |
+| **Arquivo `.vsix` Atual** | `medidortokens-0.1.1-agy2.6-fix.vsix` | Tamanho: `294.326` bytes (~`287 KB`) |
+| **Engine VS Code Mínima (`engines.vscode`)** | `^1.80.0` | Compatibilidade ampliada para exibição no Marketplace em Antigravity IDE 2.6.x/2.7+ e derivados |
+| **Keywords / Tags de Busca** | `antigravity, medidor, medidortokens, tokens, token, cotas, quota, ai, dashboard, monitor` | Indexação garantida para buscas por `"medidor"` |
 | **Autoria e E-mail Público Git** | `Rogério Centeno <rogeriocenteno@users.noreply.github.com>` | Uso do e-mail `noreply` público do GitHub |
-| **Repositório GitHub (Público)** | `https://github.com/rogeriocenteno/MedidorTokens` | Commit de referência da v0.1.0: `3b6eb42` |
-| **Release Oficial v0.1.0** | `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.0` | Contém o `.vsix` anexado nos *Assets* |
+| **Repositório GitHub (Público)** | `https://github.com/rogeriocenteno/MedidorTokens` | Commit inicial da v0.1.0: `3b6eb42` |
+| **Release Oficial** | `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.1` | Versão anterior: `v0.1.0` (`medidortokens-0.1.0-agy2.6-fix.vsix`, `293.972` bytes) |
 | **Página Pública no Open VSX** | `https://open-vsx.org/extension/rogeriocenteno/medidortokens` | URL pública da extensão após publicação |
 | **Issue de Claim do Namespace** | `https://github.com/EclipseFdn/open-vsx.org/issues/15942` | Solicitação oficial de verificação de propriedade do namespace `rogeriocenteno` |
 
@@ -33,7 +35,9 @@ Todos os metadados abaixo são **públicos** e foram utilizados na publicação 
 
 Antes de gerar e publicar um `.vsix`, confirme que a extensão atende aos requisitos do Open VSX:
 - `publisher` e `name` em letras minúsculas, sem ponto no `name` (`medidortokens`).
-- `version` válida (`0.1.0`) e atualizada a cada publicação.
+- `version` válida (`0.1.1`) e incrementada a cada publicação.
+- `engines.vscode` compatível (`^1.80.0`) para evitar que IDEs com núcleo VS Code anterior a `1.107.0` ocultem a extensão na busca da loja.
+- `keywords` / `<Tags>` incluindo termos de busca em português e inglês (`medidor`, `medidortokens`, `tokens`, `cotas`).
 - `repository` apontando para o repositório público oficial.
 - `license` declarada e arquivo `LICENSE` presente na raiz/pacote.
 - `icon` em formato **PNG** válido (ex.: `256x256` px; no projeto, convertido para `./dist_altimeter_corrigido/icon.png` — formato JPEG/WebP não é aceito corretamente pelo catálogo).
@@ -104,21 +108,21 @@ No Windows PowerShell, a partir da pasta raiz do projeto:
 2. **Opção A — Publicação direta lendo da área de transferência (PowerShell):**
 
 ```powershell
-npx --yes ovsx publish ./medidortokens-0.1.0-agy2.6-fix.vsix -p (Get-Clipboard).Trim()
+npx --yes ovsx publish ./medidortokens-0.1.1-agy2.6-fix.vsix -p (Get-Clipboard).Trim()
 ```
 
 3. **Opção B — Usando variável temporária apenas na sessão atual:**
 
 ```powershell
 $tok = (Get-Clipboard).Trim()
-npx --yes ovsx publish ./medidortokens-0.1.0-agy2.6-fix.vsix -p $tok
+npx --yes ovsx publish ./medidortokens-0.1.1-agy2.6-fix.vsix -p $tok
 Remove-Variable tok -ErrorAction SilentlyContinue
 ```
 
 4. **Saída esperada de sucesso:**
 
 ```text
-🚀  Published rogeriocenteno.medidortokens v0.1.0
+🚀  Published rogeriocenteno.medidortokens v0.1.1
 ```
 
 5. **Limpe a área de transferência após concluir** (ex.: copie um texto neutro ou execute `Set-Clipboard $null`) e valide a página pública em:
@@ -168,4 +172,4 @@ Caso queira também distribuir a extensão na loja oficial da Microsoft (VS Code
    - `https://marketplace.visualstudio.com/manage`
 2. Crie o *Publisher* com o mesmo identificador `rogeriocenteno` (caso disponível).
 3. Clique em **+ New extension** -> **Visual Studio Code**.
-4. Faça o upload do pacote `.vsix` gerado (ex.: `medidortokens-0.1.0-agy2.6-fix.vsix`), ou utilize a CLI oficial (`@vscode/vsce`) para automatizar futuras atualizações.
+4. Faça o upload do pacote `.vsix` gerado (ex.: `medidortokens-0.1.1-agy2.6-fix.vsix`), ou utilize a CLI oficial (`@vscode/vsce`) para automatizar futuras atualizações.

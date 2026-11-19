@@ -81,7 +81,7 @@ O `.gitignore` protege:
 | Node.js e logs locais | `node_modules/`, `npm-debug.log*`, `*.log`, `transcript*.jsonl`, `*.pbtxt` |
 | Sistema e temporários | `.DS_Store`, `Thumbs.db`, `desktop.ini`, `nul`, `.idea/`, `*.swp`, `*.tmp`, `scratch/` |
 
-> ⚠️ **Arquivos oficiais do projeto** (`dist_altimeter_corrigido/extension.js`, `dist_altimeter_corrigido/icon.png`, `dist_altimeter_corrigido/Pub_OpenVSX.md`, `gerar_pacote.js`, `instalar_correcao_altimeter.bat`, `medidortokens-0.1.0-agy2.6-fix.vsix` e os arquivos `.md` da raiz) **são versionados** — apenas backups locais `.bak`, logs/transcripts e pacotes legados são ignorados.
+> ⚠️ **Arquivos oficiais do projeto** (`dist_altimeter_corrigido/extension.js`, `dist_altimeter_corrigido/icon.png`, `dist_altimeter_corrigido/Pub_OpenVSX.md`, `gerar_pacote.js`, `instalar_correcao_altimeter.bat`, `medidortokens-0.1.1-agy2.6-fix.vsix` e os arquivos `.md` da raiz) **são versionados** — apenas backups locais `.bak`, logs/transcripts e pacotes legados são ignorados.
 
 ---
 
@@ -93,7 +93,7 @@ Antes do primeiro commit, confirme que o código JavaScript está válido e sinc
 # Validar sintaxe do código principal
 node -c "./dist_altimeter_corrigido/extension.js"
 
-# Sincronizar e garantir que o pacote medidortokens-0.1.0-agy2.6-fix.vsix está atualizado
+# Sincronizar e garantir que o pacote medidortokens-0.1.1-agy2.6-fix.vsix está atualizado
 node "./gerar_pacote.js"
 ```
 

@@ -2,7 +2,7 @@
   <img src="dist_altimeter_corrigido/icon.png" alt="Logo MedidorTokens" width="128" />
 </p>
 
-<h1 align="center">MedidorTokens para Antigravity IDE (v0.1.0)</h1>
+<h1 align="center">MedidorTokens para Antigravity IDE (v0.1.1)</h1>
 
 <p align="center">
   Extensão para monitoramento em tempo real do consumo de tokens de Inteligência Artificial e cotas de uso (<code>5h</code> / <code>7d</code>) no <strong>Antigravity IDE 2.6.0+</strong>.
@@ -12,7 +12,7 @@
 
 ## Visão Geral
 
-- **Versão atual:** `0.1.0`
+- **Versão atual:** `0.1.1`
 - **Nome de exibição:** `MedidorTokens`
 - **Identificador da extensão:** `rogeriocenteno.medidortokens`
 - **Autor / Mantenedor:** Rogério Centeno ([`rogeriocenteno`](https://github.com/rogeriocenteno))
@@ -20,7 +20,7 @@
 - **Fuso horário:** `America/Sao_Paulo` (`UTC-3`)
 - **Licença:** [MIT](./LICENSE)
 - **Open VSX Registry:** [`rogeriocenteno.medidortokens`](https://open-vsx.org/extension/rogeriocenteno/medidortokens)
-- **Release Oficial (GitHub):** [`v0.1.0`](https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.0)
+- **Release Oficial (GitHub):** [`v0.1.1`](https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.1)
 
 Na versão 2.6.0 do Antigravity IDE, a substituição do processo legado `language_server_windows_x64.exe` pelo serviço nativo em background fez a extensão base original (`pqub.altimeter` `0.0.4`) falhar com `Language Server not found`. Este projeto cria e mantém o **MedidorTokens**, corrigindo o núcleo de leitura para ler diretamente os logs `transcript.jsonl` em `~/.gemini/antigravity/brain/` e adicionando 12 etapas completas de monitoramento de tokens, cotas e estatísticas.
 
@@ -50,7 +50,7 @@ Na versão 2.6.0 do Antigravity IDE, a substituição do processo legado `langua
 3. Clique em **Install** e recarregue a janela se necessário (`Ctrl + Shift + P` → **`Developer: Reload Window`**).
 
 ### Opção 2: Instalar via `.vsix` (Release Oficial ou Local)
-1. Baixe [`medidortokens-0.1.0-agy2.6-fix.vsix`](./medidortokens-0.1.0-agy2.6-fix.vsix) (ou na [Release v0.1.0](https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.0)).
+1. Baixe [`medidortokens-0.1.1-agy2.6-fix.vsix`](./medidortokens-0.1.1-agy2.6-fix.vsix) (ou na [Release v0.1.1](https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.1)).
 2. No Antigravity IDE, abra **Extensions** (`Ctrl + Shift + X`).
 3. Clique em **`...`** → **`Install from VSIX...`** e selecione o arquivo `.vsix`.
 4. Pressione `Ctrl + Shift + P` e execute **`Developer: Reload Window`**.
@@ -78,11 +78,11 @@ node "./gerar_pacote.js"
 ├── Plano_Melhorias.md                  # Registro detalhado das 12 etapas
 ├── Git_Implantacao_GitHub.md           # Guia de implantação inicial do repositório GitHub
 ├── Git_Rotina_Versionamento.md         # Rotina diária de commits, branches e main
-├── medidortokens-0.1.0-agy2.6-fix.vsix # Pacote instalador oficial v0.1.0
+├── medidortokens-0.1.1-agy2.6-fix.vsix # Pacote instalador oficial v0.1.1
 ├── gerar_pacote.js                     # Script Node.js gerador do .vsix (zlib nativo)
 ├── instalar_correcao_altimeter.bat     # Instalador rápido para Windows
 └── dist_altimeter_corrigido/
-    ├── extension.js                    # Bundle principal da extensão v0.1.0
+    ├── extension.js                    # Bundle principal da extensão v0.1.1
     ├── icon.png                        # Ícone oficial (256x256 PNG)
     └── Pub_OpenVSX.md                  # Guia oficial de publicação no Open VSX Registry
 ```

@@ -1,6 +1,6 @@
 # MedidorTokens — Monitor de Tokens e Cotas para Antigravity IDE 2.6.0+
 
-**Versão:** 0.1.0  
+**Versão:** 0.1.1  
 **Identificador:** `rogeriocenteno.medidortokens`  
 **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
 **Data da atualização:** 18/11/2026  
@@ -34,7 +34,7 @@
 
 - **GitHub (Público):** `https://github.com/rogeriocenteno/MedidorTokens` — desenvolvimento em `develop`, versões estáveis e releases em `main`.
 - **Open VSX Registry:** `https://open-vsx.org/extension/rogeriocenteno/medidortokens`
-- **Release Oficial v0.1.0:** `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.0`
+- **Release Oficial v0.1.1:** `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.1`
 - **Guias de versionamento e publicação:** `Git_Implantacao_GitHub.md`, `Git_Rotina_Versionamento.md` e `dist_altimeter_corrigido/Pub_OpenVSX.md` (publicação no Open VSX Registry).
 - **Documentação técnica e fluxo de trabalho:** `Inicio.md` e `Plano_Melhorias.md`.
 
@@ -46,7 +46,7 @@
 1. Abra o **Antigravity IDE**.
 2. Abra a aba **Extensions** (`Ctrl + Shift + X`).
 3. Clique no menu de três pontos **`...`** (no canto superior direito da barra de extensões) e selecione **`Install from VSIX...`**.
-4. Selecione o arquivo **`medidortokens-0.1.0-agy2.6-fix.vsix`**.
+4. Selecione o arquivo **`medidortokens-0.1.1-agy2.6-fix.vsix`**.
 5. Recarregue a janela (`Ctrl + Shift + P` → `Developer: Reload Window`).
 
 ### Forma B: Instalador automático de 1 clique (Windows)
@@ -57,7 +57,7 @@
 ### Forma C: Substituição manual do arquivo `extension.js`
 1. Copie o arquivo `dist_altimeter_corrigido\extension.js`.
 2. Cole substituindo o arquivo existente na sua pasta de extensões:
-   `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.0\dist\extension.js`  
+   `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.1\dist\extension.js`  
    *(ou na pasta correspondente à versão instalada)*.
 3. Recarregue a janela do Antigravity IDE (`Ctrl + Shift + P` → `Developer: Reload Window`).
 

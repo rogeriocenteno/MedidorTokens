@@ -1,7 +1,7 @@
 # Guia de Inicialização do Projeto — Extensão MedidorTokens (Antigravity IDE 2.6.0+)
 
 > **Documento de Orientação para Agentes e Desenvolvedores**  
-> **Última atualização:** 18/11/2026 (Versão `0.1.0`)  
+> **Última atualização:** 18/11/2026 (Versão `0.1.1`)  
 > **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
 > **Fuso horário obrigatório do projeto:** `America/Sao_Paulo` (`UTC-3`)  
 > **Idioma oficial de interface, código e documentação:** Português do Brasil (`pt-BR`)  
@@ -17,15 +17,15 @@ Este projeto mantém, aprimora e distribui a extensão **MedidorTokens** (`roger
 * **Pasta deste repositório/workspace:**  
   `./` (raiz do repositório)
 * **Instalação ativa da extensão na IDE do usuário:**  
-  `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.0\`
+  `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.1\`
 * **Arquivo JavaScript compilado em execução:**  
-  `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.0\dist\extension.js`
+  `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.1\dist\extension.js`
 * **Logs de sessão do Antigravity lidos pela extensão:**  
   `%USERPROFILE%\.gemini\antigravity\brain\<cascade-id>\.system_generated\logs\transcript.jsonl`
 * **Página Oficial no Open VSX Registry:**  
   `https://open-vsx.org/extension/rogeriocenteno/medidortokens`
-* **Release Oficial v0.1.0 no GitHub:**  
-  `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.0`
+* **Release Oficial v0.1.1 no GitHub:**  
+  `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.1`
 
 ---
 
@@ -100,7 +100,7 @@ O arquivo `dist/extension.js` é um bundle minificado gerado via esbuild. Ao rea
 ├── Git_Rotina_Versionamento.md           <-- Rotina diária de commits, branches e marco em main
 ├── .gitignore                            <-- Proteção contra versionamento de backups e dados sensíveis
 │
-├── medidortokens-0.1.0-agy2.6-fix.vsix   <-- Pacote instalador oficial gerado (Versão 0.1.0)
+├── medidortokens-0.1.1-agy2.6-fix.vsix   <-- Pacote instalador oficial gerado (Versão 0.1.1)
 ├── gerar_pacote.js                       <-- Script Node.js que sincroniza e compila o .vsix
 ├── instalar_correcao_altimeter.bat       <-- Script batch para instalação rápida no Windows
 │
@@ -147,7 +147,7 @@ node -c "./dist_altimeter_corrigido/extension.js"
 *(Deve retornar código de saída 0 sem nenhum erro)*.
 
 ### Passo 4: Sincronizar e Regerar o `.vsix`
-Execute o gerador oficial do projeto (copia `dist_altimeter_corrigido\extension.js` para `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.0\dist\extension.js`, atualiza metadados/registro na IDE e gera o `.vsix`). Como grava fora do workspace, rode com `BypassSandbox: true`:
+Execute o gerador oficial do projeto (copia `dist_altimeter_corrigido\extension.js` para `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.1\dist\extension.js`, atualiza metadados/registro na IDE e gera o `.vsix`). Como grava fora do workspace, rode com `BypassSandbox: true`:
 ```powershell
 node "./gerar_pacote.js"
 ```
@@ -173,7 +173,7 @@ Como este repositório é **público**, todo arquivo alterado e todo commit **DE
 1. **Erro `CreateProcessSecurityEnvironment`:**  
    Em ambientes Windows com sandboxing restrito, se o comando falhar com erro de criação de ambiente, utilize `BypassSandbox: true` mantendo o mesmo `toolSummary`.
 2. **Pacote `.vsix`:**  
-   O arquivo `medidortokens-0.1.0-agy2.6-fix.vsix` é um zip no padrão Open VSIX. O `gerar_pacote.js` monta o pacote com `zlib` nativo do Node.js (sem `archiver` e sem `vsce`).
+   O arquivo `medidortokens-0.1.1-agy2.6-fix.vsix` é um zip no padrão Open VSIX. O `gerar_pacote.js` monta o pacote com `zlib` nativo do Node.js (sem `archiver` e sem `vsce`).
 3. **Repositório Git:**  
    `https://github.com/rogeriocenteno/MedidorTokens` (público). Trabalhar sempre em `develop`; `main` só em marcos. Ver `Git_Rotina_Versionamento.md`. No sandbox, `git push` exige `BypassSandbox: true` (SSH).
 4. **Reload da IDE:**  

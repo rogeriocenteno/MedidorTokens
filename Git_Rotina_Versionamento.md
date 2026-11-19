@@ -77,7 +77,7 @@ Use sempre um dos prefixos abaixo para identificar o tipo de alteração:
 | `docs:` | Alteração em documentação | `docs: atualiza Inicio.md e LEIA-ME.md com Etapa 12` |
 | `refactor:` | Refatoração sem mudança visível | `refactor: extrai parseResetTime em _autoSyncQuotasFromIDE` |
 | `style:` | Ajuste visual/CSS nos painéis Webview | `style: ajusta espaçamento do botão Auto no painel lateral` |
-| `pkg:` | Atualização de build, `.vsix` ou scripts de empacotamento | `pkg: regera medidortokens-0.1.0-agy2.6-fix.vsix após atualização` |
+| `pkg:` | Atualização de build, `.vsix` ou scripts de empacotamento | `pkg: regera medidortokens-0.1.1-agy2.6-fix.vsix após atualização` |
 | `chore:` | Tarefas de manutenção ou configuração | `chore: configura .gitignore para ignorar backups .bak locais` |
 | `plan:` | Atualização de plano/documentação de planejamento | `plan: registra nova etapa no Plano_Melhorias.md` |
 
@@ -162,7 +162,7 @@ Sempre execute na pasta raiz do projeto (`<pasta-do-projeto>`):
 # 1. Validar sintaxe do código principal
 node -c "./dist_altimeter_corrigido/extension.js"
 
-# 2. Sincronizar com a IDE e atualizar medidortokens-0.1.0-agy2.6-fix.vsix
+# 2. Sincronizar com a IDE e atualizar medidortokens-0.1.1-agy2.6-fix.vsix
 node "./gerar_pacote.js"
 ```
 

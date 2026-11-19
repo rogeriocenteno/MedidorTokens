@@ -5,13 +5,26 @@ const zlib = require('zlib');
 
 const targetName = 'medidortokens';
 const targetDisplayName = 'MedidorTokens';
-const targetVersion = '0.1.0';
+const targetVersion = '0.1.1';
 const targetPublisher = 'rogeriocenteno';
+const targetEngine = '^1.80.0';
+const targetKeywords = [
+  'antigravity',
+  'medidor',
+  'medidortokens',
+  'tokens',
+  'token',
+  'cotas',
+  'quota',
+  'ai',
+  'dashboard',
+  'monitor'
+];
 const targetAuthor = {
   name: 'Rogério Centeno',
   url: 'https://github.com/rogeriocenteno'
 };
-const targetDescription = 'Extensão para monitoramento em tempo real do consumo de tokens e cotas de IA (5h/7d) no Antigravity IDE 2.6.0+.';
+const targetDescription = 'Medidor de tokens e cotas de IA (5h/7d) em tempo real para Antigravity IDE 2.6.0+.';
 const targetRepoUrl = 'https://github.com/rogeriocenteno/MedidorTokens';
 
 const extensionsRoot = path.join(os.homedir(), '.antigravity-ide', 'extensions');
@@ -184,6 +197,8 @@ const vsixManifest = fs.readFileSync(vsixManifestPath, 'utf8')
   .replace(/<Identity\b[^>]*>/, `<Identity Language="pt-BR" Id="${targetName}" Version="${targetVersion}" Publisher="${targetPublisher}" />`)
   .replace(/<DisplayName\b[^>]*>[\s\S]*?<\/DisplayName>/, `<DisplayName>${targetDisplayName}</DisplayName>`)
   .replace(/<Description\b[^>]*>[\s\S]*?<\/Description>/, `<Description xml:space="preserve">${targetDescription}</Description>`)
+  .replace(/<Tags\b[^>]*>[\s\S]*?<\/Tags>/, `<Tags>${targetKeywords.join(',')}</Tags>`)
+  .replace(/<Property Id="Microsoft\.VisualStudio\.Code\.Engine" Value="[^"]*"\s*\/>/, `<Property Id="Microsoft.VisualStudio.Code.Engine" Value="${targetEngine}" />`)
   .replace(/https:\/\/github\.com\/pqub\/altimeter/g, targetRepoUrl);
 fs.writeFileSync(vsixManifestPath, vsixManifest, 'utf8');
 
@@ -195,6 +210,8 @@ pkgJsonObj.version = targetVersion;
 pkgJsonObj.publisher = targetPublisher;
 pkgJsonObj.author = targetAuthor;
 pkgJsonObj.description = targetDescription;
+pkgJsonObj.engines = Object.assign({}, pkgJsonObj.engines || {}, { vscode: targetEngine });
+pkgJsonObj.keywords = targetKeywords;
 pkgJsonObj.homepage = `${targetRepoUrl}#readme`;
 pkgJsonObj.bugs = { url: `${targetRepoUrl}/issues` };
 pkgJsonObj.repository = { type: 'git', url: `${targetRepoUrl}.git` };
@@ -205,6 +222,23 @@ if (pkgJsonObj.contributes) {
   pkgJsonObj.contributes = JSON.parse(contribStr);
 }
 fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJsonObj, null, '\t'), 'utf8');
+
+const extReadmePath = path.join(extDir, 'readme.md');
+if (fs.existsSync(extReadmePath)) {
+  const nextReadme = fs.readFileSync(extReadmePath, 'utf8')
+    .replace(/\*\*Versão:\*\*\s*`[^`]+`/, `**Versão:** \`${targetVersion}\``);
+  fs.writeFileSync(extReadmePath, nextReadme, 'utf8');
+}
+
+const extChangelogPath = path.join(extDir, 'changelog.md');
+if (fs.existsSync(extChangelogPath)) {
+  const curChangelog = fs.readFileSync(extChangelogPath, 'utf8');
+  if (!curChangelog.includes(`## [${targetVersion}]`)) {
+    const newEntry = `## [0.1.1] - 18/11/2026\n\n### 🔧 Melhorias de Compatibilidade e Busca no Open VSX\n- **Compatibilidade Ampliada (\`engines.vscode\`):** Reduzido requisito mínimo de \`^1.107.0\` para \`^1.80.0\` em \`package.json\` e \`.vsixmanifest\`, permitindo exibição e instalação no Marketplace de qualquer versão do Antigravity IDE (2.6.x / 2.7.x+) e IDEs compatíveis.\n- **Indexação de Busca (\`medidor\`):** Adicionadas palavras-chave \`medidor\`, \`medidortokens\`, \`tokens\` e \`cotas\` e ajustada a descrição oficial para priorizar a extensão nas buscas por \`"medidor"\`.\n\n---\n\n`;
+    const nextChangelog = curChangelog.replace('## [0.1.0]', newEntry + '## [0.1.0]');
+    fs.writeFileSync(extChangelogPath, nextChangelog, 'utf8');
+  }
+}
 
 const vsixPkgObj = { ...pkgJsonObj };
 delete vsixPkgObj.__metadata;
@@ -332,7 +366,7 @@ for (const name of fs.readdirSync(extensionsRoot)) {
 }
 
 // Move pacotes .vsix antigos para backup_altimeter_0.0.4/ caso existam na raiz
-for (const oldVsixName of ['altimeter-0.0.6-agy2.6-fix.vsix', 'altimeter-0.1.0-agy2.6-fix.vsix']) {
+for (const oldVsixName of ['altimeter-0.0.6-agy2.6-fix.vsix', 'altimeter-0.1.0-agy2.6-fix.vsix', 'medidortokens-0.1.0-agy2.6-fix.vsix']) {
   const oldVsixPath = path.join(outDir, oldVsixName);
   if (fs.existsSync(oldVsixPath)) {
     const backupDir = path.join(outDir, 'backup_altimeter_0.0.4');
