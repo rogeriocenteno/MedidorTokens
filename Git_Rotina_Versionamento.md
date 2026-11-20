@@ -175,3 +175,23 @@ node "./gerar_pacote.js"
 ```powershell
 $tok = (Read-Host "Cole o Token do Open VSX e aperte Enter").Trim(); npx --yes ovsx publish ./medidortokens-<VERSAO>-agy2.6-fix.vsix -p $tok; Remove-Variable tok -ErrorAction SilentlyContinue
 ```
+
+### Publicação Automatizada da Release no GitHub (GitHub CLI — `gh`)
+Com o **GitHub CLI (`gh`)** instalado e autenticado (`gh auth login --hostname github.com --git-protocol ssh --web` — escolha `Skip` se a chave SSH já estiver cadastrada no GitHub), a criação da Release e o anexo do `.vsix` são feitos diretamente pelo terminal:
+
+```powershell
+# 1. Criar tag anotada em main e enviar develop, main e a tag
+git tag -a v<VERSAO> -m "MedidorTokens v<VERSAO> - <resumo>"
+git push origin develop main v<VERSAO>
+
+# 2. Criar e publicar a Release anexando o .vsix (notas em UTF-8 fora do repositório)
+gh release create v<VERSAO> ./medidortokens-<VERSAO>-agy2.6-fix.vsix --repo rogeriocenteno/MedidorTokens --title "MedidorTokens v<VERSAO> - <resumo>" --notes-file "<caminho_temporario_notas_utf8.md>" --latest
+
+# 3. Validar a Release publicada e o anexo
+gh release view v<VERSAO> --repo rogeriocenteno/MedidorTokens --json tagName,name,isDraft,isPrerelease,publishedAt,url,assets
+```
+
+> **Boas práticas no Windows PowerShell 5.1:**
+> - Use `-` (hífen ASCII) em `--title` para evitar problemas de codificação no console, mantendo acentos e formatação Markdown em UTF-8 no arquivo passado em `--notes-file` (gravado fora do repositório, ex.: pasta temporária/scratch, para não sujar o `git status`).
+> - Caso o terminal integrado ainda não reconheça `gh` logo após a instalação, use `& "$env:ProgramFiles\GitHub CLI\gh.exe"` ou reinicie a IDE.
+> - Em execuções automatizadas com sandbox, o `gh` exige acesso fora do sandbox (`BypassSandbox: true`) para ler `%APPDATA%\GitHub CLI\config.yml` e acessar `api.github.com`.

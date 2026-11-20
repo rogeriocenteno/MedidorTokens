@@ -148,10 +148,21 @@ node ./gerar_pacote.js
 ```
 
 4. **Auditoria pré-commit (higiene de segurança):** verifique `git status` e garanta que nenhum arquivo rastreado contenha tokens, credenciais, e-mail pessoal ou caminhos absolutos locais com usuário.
-5. **Versionamento Git (`develop` -> `main`) e Release no GitHub:**
+5. **Versionamento Git (`develop` -> `main`) e Release no GitHub (via GitHub CLI `gh`):**
    - Faça commit das alterações na branch `develop`.
-   - Integre em `main`, crie a tag anotada correspondente (ex.: `v0.1.1`) e envie branches e tag ao repositório remoto (`origin`).
-   - Crie a Release correspondente no GitHub anexando o novo arquivo `./medidortokens-<VERSAO>-agy2.6-fix.vsix`.
+   - Integre em `main`, crie a tag anotada correspondente (ex.: `v0.1.4`) e envie branches e tag ao repositório remoto (`origin`):
+
+```powershell
+git tag -a v<VERSAO> -m "MedidorTokens v<VERSAO> - <resumo>"
+git push origin develop main v<VERSAO>
+```
+
+   - Publique a Release automaticamente no GitHub via `gh` anexando `./medidortokens-<VERSAO>-agy2.6-fix.vsix` (gravando o texto das notas em UTF-8 em um arquivo temporário fora do repositório) e valide o resultado:
+
+```powershell
+gh release create v<VERSAO> ./medidortokens-<VERSAO>-agy2.6-fix.vsix --repo rogeriocenteno/MedidorTokens --title "MedidorTokens v<VERSAO> - <resumo>" --notes-file "<arquivo_notas_utf8.md>" --latest
+gh release view v<VERSAO> --repo rogeriocenteno/MedidorTokens --json tagName,name,isDraft,isPrerelease,publishedAt,url,assets
+```
 6. **Publicar no Open VSX:**
    - Gere ou recupere o token `Publishing only` restrito ao namespace `rogeriocenteno`.
    - Execute no PowerShell (substituindo `<VERSAO>` pela versão atual, ex.: `0.1.3`):
