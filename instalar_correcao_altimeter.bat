@@ -2,7 +2,7 @@
 chcp 65001 >nul
 echo ============================================================================
 echo   Instalador do MedidorTokens para Antigravity IDE 2.6.0+
-echo   Data: 18/11/2026 - Versao: 0.1.1 - Autor: Rogerio Centeno
+echo   Data: 19/11/2026 - Versao: 0.1.3 - Autor: Rogerio Centeno
 echo ============================================================================
 echo.
 
@@ -34,7 +34,7 @@ if "%ENCONTRADO%"=="0" (
     echo [AVISO] Nenhuma pasta rogeriocenteno.medidortokens-* foi encontrada em:
     echo   "%EXT_BASE%"
     echo Voce pode instalar diretamente o pacote .vsix pelo Antigravity IDE:
-    echo   Ctrl+Shift+X -^> menu "..." -^> Install from VSIX... -^> medidortokens-0.1.1-agy2.6-fix.vsix
+    echo   Ctrl+Shift+X -^> menu "..." -^> Install from VSIX... -^> medidortokens-0.1.3-agy2.6-fix.vsix
 ) else (
     echo ============================================================================
     echo   Concluido! Agora no Antigravity IDE pressione Ctrl+Shift+P e execute:

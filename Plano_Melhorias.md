@@ -1,10 +1,10 @@
 # Plano de Melhorias — Extensão MedidorTokens (Antigravity IDE 2.6.0+)
 
-**Versão atual:** `0.1.2` | **Identificador:** `rogeriocenteno.medidortokens` | **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
+**Versão atual:** `0.1.3` | **Identificador:** `rogeriocenteno.medidortokens` | **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
 **Data de criação do plano:** 28/10/2026 | **Última atualização:** 19/11/2026  
 **Fuso horário padrão do projeto:** `UTC-3` (`America/Sao_Paulo`)  
 **Idioma padrão da interface e documentação:** Português do Brasil (`pt-BR`)  
-**Arquivo-alvo principal:** `./dist_altimeter_corrigido/extension.js` (sincronizado pelo `gerar_pacote.js` com `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.2\dist\extension.js`)  
+**Arquivo-alvo principal:** `./dist_altimeter_corrigido/extension.js` (sincronizado pelo `gerar_pacote.js` com `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.3\dist\extension.js`)  
 **Pasta de backups e pacotes do projeto:** `./` (raiz do projeto)  
 **Repositório:** `https://github.com/rogeriocenteno/MedidorTokens` (**PÚBLICO** — branch de trabalho `develop`, releases em `main`)  
 **Open VSX Registry:** `https://open-vsx.org/extension/rogeriocenteno/medidortokens` | **Guia de Publicação:** `./dist_altimeter_corrigido/Pub_OpenVSX.md`
@@ -39,7 +39,7 @@
 
 ---
 
-## Detalhamento Técnico das 14 Etapas de Melhoria (todas concluídas)
+## Detalhamento Técnico das 15 Etapas de Melhoria (todas concluídas)
 
 ---
 
@@ -235,6 +235,16 @@
   2. **Normalização de Slugs em `saSlugMap`:** Mapeamento de `gemini-4-neon-extra`, `gemini-4-neon-extra-high`, `gemini 4 neon (extra high)`, `gemini-4-neon-high`, `gemini-4-neon-medium`, `gemini-4-neon-low` e `gemini-4-neon`.
   3. **Integração de Cotas (`Gemini Models`):** Confirmado o agrupamento automático em `gemini` (`5h / 7d`) sem afetar a interface adaptativa de contas Starter (Free).
 
+---
+
+### Etapa 15: Suporte ao Novo Modelo `Orchestrator (Neon)` (`v0.1.3`)
+- **Status:** ✅ Concluído
+- **Objetivo:** Registrar oficialmente o novo modelo **Orchestrator (Neon)** (`gemini-pro-orchestrator-neon`), evitando que seja convertido incorretamente para `Orchestrator (Argon)` pela regra genérica em `at()` e mantendo sua contabilização integrada à cota compartilhada **Gemini Models** (`5h / 7d`).
+- **Implementações (`v0.1.3`):**
+  1. **Registro em `sa` e Ordenação:** Inclusão de `Orchestrator (Neon)` e `gemini-pro-orchestrator-neon` com cor exclusiva (`#D946EF`) e `order: 0.5` (logo após `Orchestrator (Argon)`).
+  2. **Normalização de Slugs e Regra Específica em `saSlugMap` / `at()`:** Mapeamento de `orchestrator (neon)`, `orchestrator-neon`, `gemini-pro-orchestrator-neon`, `gemini-4-neon-orchestrator` e `orchestrator (gemini 4 neon)`, além de verificação explícita `orchestrator && neon` antes da regra genérica de Argon em `at()`.
+  3. **Integração de Cotas (`Gemini Models`):** Atualização de `_getQuotaGroup` e proteção em `_autoSyncQuotasFromIDE` para agrupar modelos contendo `neon` (sem `argon`) na cota **Gemini Models** (`5h / 7d`), mesmo quando contêm `orchestrator` no nome.
+
 
 ---
 
@@ -250,5 +260,5 @@ Ordem seguida na implantação das primeiras etapas (menor para maior impacto vi
 7. **Etapa 7** — Contador na Barra de Status inferior da IDE (`Status Bar`).
 8. **Etapa 8** — Filtro de período (8, 15, 30 dias, Tudo) e exportação CSV na janela de estatísticas.
 
-> **Observação:** Após concluir qualquer etapa, execute `node gerar_pacote.js` na pasta raiz do projeto (`./`) para sincronizar a extensão instalada e atualizar o instalador `medidortokens-0.1.2-agy2.6-fix.vsix`. Depois, versione em `develop` conforme `Git_Rotina_Versionamento.md` e, ao publicar nova versão no Open VSX Registry, siga `./dist_altimeter_corrigido/Pub_OpenVSX.md`.
+> **Observação:** Após concluir qualquer etapa, execute `node gerar_pacote.js` na pasta raiz do projeto (`./`) para sincronizar a extensão instalada e atualizar o instalador `medidortokens-0.1.3-agy2.6-fix.vsix`. Depois, versione em `develop` conforme `Git_Rotina_Versionamento.md` e, ao publicar nova versão no Open VSX Registry, siga `./dist_altimeter_corrigido/Pub_OpenVSX.md`.
 

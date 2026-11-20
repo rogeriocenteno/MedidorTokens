@@ -5,7 +5,7 @@ const zlib = require('zlib');
 
 const targetName = 'medidortokens';
 const targetDisplayName = 'MedidorTokens';
-const targetVersion = '0.1.2';
+const targetVersion = '0.1.3';
 const targetPublisher = 'rogeriocenteno';
 const targetEngine = '^1.80.0';
 const targetKeywords = [
@@ -234,8 +234,10 @@ const extChangelogPath = path.join(extDir, 'changelog.md');
 if (fs.existsSync(extChangelogPath)) {
   const curChangelog = fs.readFileSync(extChangelogPath, 'utf8');
   if (!curChangelog.includes(`## [${targetVersion}]`)) {
-    const newEntry = `## [0.1.1] - 18/11/2026\n\n### 🔧 Melhorias de Compatibilidade e Busca no Open VSX\n- **Compatibilidade Ampliada (\`engines.vscode\`):** Reduzido requisito mínimo de \`^1.107.0\` para \`^1.80.0\` em \`package.json\` e \`.vsixmanifest\`, permitindo exibição e instalação no Marketplace de qualquer versão do Antigravity IDE (2.6.x / 2.7.x+) e IDEs compatíveis.\n- **Indexação de Busca (\`medidor\`):** Adicionadas palavras-chave \`medidor\`, \`medidortokens\`, \`tokens\` e \`cotas\` e ajustada a descrição oficial para priorizar a extensão nas buscas por \`"medidor"\`.\n\n---\n\n`;
-    const nextChangelog = curChangelog.replace('## [0.1.0]', newEntry + '## [0.1.0]');
+    const newEntry = `## [${targetVersion}] - 19/11/2026\n\n### ✨ Novo Modelo Suportado\n- **Suporte ao Modelo \`Orchestrator (Neon)\` (\`gemini-pro-orchestrator-neon\`):** Registro com cor dedicada (\`#D946EF\`), normalização de slugs/aliases sem colisão com \`Orchestrator (Argon)\` e agrupamento automático na cota compartilhada **Gemini Models** (\`5h / 7d\`).\n\n---\n\n`;
+    const nextChangelog = /(## \[)/.test(curChangelog)
+      ? curChangelog.replace(/(## \[)/, newEntry + '$1')
+      : newEntry + curChangelog;
     fs.writeFileSync(extChangelogPath, nextChangelog, 'utf8');
   }
 }
@@ -366,7 +368,7 @@ for (const name of fs.readdirSync(extensionsRoot)) {
 }
 
 // Move pacotes .vsix antigos para backup_altimeter_0.0.4/ caso existam na raiz
-for (const oldVsixName of ['altimeter-0.0.6-agy2.6-fix.vsix', 'altimeter-0.1.0-agy2.6-fix.vsix', 'medidortokens-0.1.0-agy2.6-fix.vsix']) {
+for (const oldVsixName of ['altimeter-0.0.6-agy2.6-fix.vsix', 'altimeter-0.1.0-agy2.6-fix.vsix', 'medidortokens-0.1.0-agy2.6-fix.vsix', 'medidortokens-0.1.1-agy2.6-fix.vsix', 'medidortokens-0.1.2-agy2.6-fix.vsix']) {
   const oldVsixPath = path.join(outDir, oldVsixName);
   if (fs.existsSync(oldVsixPath)) {
     const backupDir = path.join(outDir, 'backup_altimeter_0.0.4');

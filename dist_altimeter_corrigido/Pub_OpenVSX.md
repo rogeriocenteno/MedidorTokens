@@ -21,13 +21,13 @@ Todos os metadados abaixo são **públicos** e foram utilizados na publicação 
 | **Name (`name` / ID técnico)** | `medidortokens` | Sem pontos, espaços ou maiúsculas (regra obrigatória do `package.json`) |
 | **Publisher / Namespace** | `rogeriocenteno` | Idêntico ao usuário GitHub para facilitar comprovação de propriedade |
 | **ID Completo da Extensão** | `rogeriocenteno.medidortokens` | Formato `<publisher>.<name>` |
-| **Versão Atual Publicada** | `0.1.2` | Suporte ao modelo `Gemini 4 Neon` (`Extra`/`High`/`Medium`/`Low`) — versões anteriores: `0.1.1` e `0.1.0` |
-| **Arquivo `.vsix` Atual** | `medidortokens-0.1.2-agy2.6-fix.vsix` | Tamanho: `294.483` bytes (~`288 KB`) |
+| **Versão Atual Publicada** | `0.1.3` | Suporte ao modelo `Orchestrator (Neon)` (`gemini-pro-orchestrator-neon`) — versões anteriores: `0.1.2`, `0.1.1` e `0.1.0` |
+| **Arquivo `.vsix` Atual** | `medidortokens-0.1.3-agy2.6-fix.vsix` | Tamanho: `294.701` bytes (~`288 KB`) |
 | **Engine VS Code Mínima (`engines.vscode`)** | `^1.80.0` | Compatibilidade ampliada para exibição no Marketplace em Antigravity IDE 2.6.x/2.7+ e derivados |
 | **Keywords / Tags de Busca** | `antigravity, medidor, medidortokens, tokens, token, cotas, quota, ai, dashboard, monitor` | Indexação garantida para buscas por `"medidor"` |
 | **Autoria e E-mail Público Git** | `Rogério Centeno <rogeriocenteno@users.noreply.github.com>` | Uso do e-mail `noreply` público do GitHub |
 | **Repositório GitHub (Público)** | `https://github.com/rogeriocenteno/MedidorTokens` | Commit inicial da v0.1.0: `3b6eb42` |
-| **Release Oficial** | `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.2` | Versões anteriores: `v0.1.1` (`294.326` bytes) e `v0.1.0` (`293.972` bytes) |
+| **Release Oficial** | `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.3` | Versões anteriores: `v0.1.2` (`294.483` bytes), `v0.1.1` (`294.326` bytes) e `v0.1.0` (`293.972` bytes) |
 | **Página Pública no Open VSX** | `https://open-vsx.org/extension/rogeriocenteno/medidortokens` | URL pública da extensão após publicação |
 | **Issue de Claim do Namespace** | `https://github.com/EclipseFdn/open-vsx.org/issues/15942` | Solicitação oficial de verificação de propriedade do namespace `rogeriocenteno` |
 
@@ -35,7 +35,7 @@ Todos os metadados abaixo são **públicos** e foram utilizados na publicação 
 
 Antes de gerar e publicar um `.vsix`, confirme que a extensão atende aos requisitos do Open VSX:
 - `publisher` e `name` em letras minúsculas, sem ponto no `name` (`medidortokens`).
-- `version` válida (`0.1.2`) e incrementada a cada publicação.
+- `version` válida (`0.1.3`) e incrementada a cada publicação.
 - `engines.vscode` compatível (`^1.80.0`) para evitar que IDEs com núcleo VS Code anterior a `1.107.0` ocultem a extensão na busca da loja.
 - `keywords` / `<Tags>` incluindo termos de busca em português e inglês (`medidor`, `medidortokens`, `tokens`, `cotas`).
 - `repository` apontando para o repositório público oficial.
@@ -108,19 +108,19 @@ No Windows PowerShell, a partir da pasta raiz do projeto:
    > Evita o erro comum de copiar o comando abaixo e sobrescrever o token que estava na área de transferência (`Ctrl+C`).
 
 ```powershell
-$tok = (Read-Host "Cole o Token do Open VSX e aperte Enter").Trim(); npx --yes ovsx publish ./medidortokens-0.1.2-agy2.6-fix.vsix -p $tok; Remove-Variable tok -ErrorAction SilentlyContinue
+$tok = (Read-Host "Cole o Token do Open VSX e aperte Enter").Trim(); npx --yes ovsx publish ./medidortokens-0.1.3-agy2.6-fix.vsix -p $tok; Remove-Variable tok -ErrorAction SilentlyContinue
 ```
 
 2. **Opção B — Publicação direta lendo da área de transferência (apenas se o token já estiver no `Ctrl+C` e você NÃO copiar o comando):**
 
 ```powershell
-npx --yes ovsx publish ./medidortokens-0.1.2-agy2.6-fix.vsix -p (Get-Clipboard).Trim()
+npx --yes ovsx publish ./medidortokens-0.1.3-agy2.6-fix.vsix -p (Get-Clipboard).Trim()
 ```
 
 3. **Saída esperada de sucesso:**
 
 ```text
-🚀  Published rogeriocenteno.medidortokens v0.1.2
+🚀  Published rogeriocenteno.medidortokens v0.1.3
 ```
 
 4. **Aguarde a ativação e indexação no Open VSX (1 a 3 minutos):**
@@ -154,7 +154,7 @@ node ./gerar_pacote.js
    - Crie a Release correspondente no GitHub anexando o novo arquivo `./medidortokens-<VERSAO>-agy2.6-fix.vsix`.
 6. **Publicar no Open VSX:**
    - Gere ou recupere o token `Publishing only` restrito ao namespace `rogeriocenteno`.
-   - Execute no PowerShell (substituindo `<VERSAO>` pela versão atual, ex.: `0.1.2`):
+   - Execute no PowerShell (substituindo `<VERSAO>` pela versão atual, ex.: `0.1.3`):
 
 ```powershell
 $tok = (Read-Host "Cole o Token do Open VSX e aperte Enter").Trim(); npx --yes ovsx publish ./medidortokens-<VERSAO>-agy2.6-fix.vsix -p $tok; Remove-Variable tok -ErrorAction SilentlyContinue
