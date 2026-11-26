@@ -1,7 +1,7 @@
 # Guia de Inicialização do Projeto — Extensão MedidorTokens (Antigravity IDE 2.6.0+)
 
 > **Documento de Orientação para Agentes e Desenvolvedores**  
-> **Última atualização:** 19/11/2026 (Versão `0.1.3`)  
+> **Última atualização:** 26/11/2026 (Versão `0.1.4`)  
 > **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
 > **Fuso horário obrigatório do projeto:** `America/Sao_Paulo` (`UTC-3`)  
 > **Idioma oficial de interface, código e documentação:** Português do Brasil (`pt-BR`)  
@@ -17,15 +17,15 @@ Este projeto mantém, aprimora e distribui a extensão **MedidorTokens** (`roger
 * **Pasta deste repositório/workspace:**  
   `./` (raiz do repositório)
 * **Instalação ativa da extensão na IDE do usuário:**  
-  `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.3\`
+  `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.4\`
 * **Arquivo JavaScript compilado em execução:**  
-  `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.3\dist\extension.js`
+  `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.4\dist\extension.js`
 * **Logs de sessão do Antigravity lidos pela extensão:**  
   `%USERPROFILE%\.gemini\antigravity\brain\<cascade-id>\.system_generated\logs\transcript.jsonl`
 * **Página Oficial no Open VSX Registry:**  
   `https://open-vsx.org/extension/rogeriocenteno/medidortokens`
-* **Release Oficial v0.1.3 no GitHub:**  
-  `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.3`
+* **Release Oficial v0.1.4 no GitHub:**  
+  `https://github.com/rogeriocenteno/MedidorTokens/releases/tag/v0.1.4`
 
 ---
 
@@ -42,7 +42,7 @@ Language Server not found
 
 ---
 
-## 3. Resumo das Melhorias Implementadas (Etapas 1 a 15)
+## 3. Resumo das Melhorias Implementadas (Etapas 1 a 16)
 
 | Etapa | Funcionalidade | Descrição Técnica |
 | :---: | :--- | :--- |
@@ -61,6 +61,7 @@ Language Server not found
 | **13** | **Identidade MedidorTokens e Publicação no Open VSX (v0.1.1)** | Renomeação completa para `MedidorTokens` (`rogeriocenteno.medidortokens`), conversão do ícone oficial `256x256` PNG, redução de `engines.vscode` para `^1.80.0` (compatibilidade com qualquer build do Antigravity IDE), adição das tags de busca (`medidor`, `medidortokens`, `tokens`, `cotas`) e guia de publicação em `dist_altimeter_corrigido/Pub_OpenVSX.md`. |
 | **14** | **Suporte ao Modelo `Gemini 4 Neon` (v0.1.2)** | Registro das variantes `Gemini 4 Neon (Extra)`, `(High)`, `(Medium)`, `(Low)` e base em `sa` e `saSlugMap` com paleta rosa/magenta neon dedicada (`#C2185B`–`#F48FB1`), ordenação logo após `Gemini 4 Argon` e agrupamento automático na cota `Gemini Models` (`5h / 7d`, disponível em contas pagas). |
 | **15** | **Suporte ao Modelo `Orchestrator (Neon)` (v0.1.3)** | Registro de `Orchestrator (Neon)` (`gemini-pro-orchestrator-neon`) em `sa`, `saSlugMap` e `at()` com cor dedicada `#D946EF`, ordenação `0.5` (sem colisão com `Orchestrator (Argon)`) e agrupamento na cota `Gemini Models` (`5h / 7d`) em `_getQuotaGroup` e `_autoSyncQuotasFromIDE`. |
+| **16** | **Unificação da Cota Argon e Modelos `Carbon` / `Hydrogen` (v0.1.4)** | Unificação da cota de Argon/Orchestrator na família compartilhada `Gemini Models` (`5h / 7d`), removendo o cartão e os campos separados de Argon; e registro de `Gemini 4 Carbon` (`Extra`, `High`, `Medium`, `Low`), `Gemini 4 Hydrogen` (`Extra`, `High`, `Medium`, `Low`) e variantes `Orchestrator (Carbon)` / `Orchestrator (Hydrogen)` em `sa`, `saSlugMap` e `at()`. |
 
 ---
 
@@ -103,7 +104,7 @@ O arquivo `dist/extension.js` é um bundle minificado gerado via esbuild. Ao rea
 ├── Git_Rotina_Versionamento.md           <-- Rotina diária de commits, branches e marco em main
 ├── .gitignore                            <-- Proteção contra versionamento de backups e dados sensíveis
 │
-├── medidortokens-0.1.3-agy2.6-fix.vsix   <-- Pacote instalador oficial gerado (Versão 0.1.3)
+├── medidortokens-0.1.4-agy2.6-fix.vsix   <-- Pacote instalador oficial gerado (Versão 0.1.4)
 ├── gerar_pacote.js                       <-- Script Node.js que sincroniza e compila o .vsix
 ├── instalar_correcao_altimeter.bat       <-- Script batch para instalação rápida no Windows
 │
@@ -150,7 +151,7 @@ node -c "./dist_altimeter_corrigido/extension.js"
 *(Deve retornar código de saída 0 sem nenhum erro)*.
 
 ### Passo 4: Sincronizar e Regerar o `.vsix`
-Execute o gerador oficial do projeto (copia `dist_altimeter_corrigido\extension.js` para `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.3\dist\extension.js`, atualiza metadados/registro na IDE e gera o `.vsix`). Como grava fora do workspace, rode com `BypassSandbox: true`:
+Execute o gerador oficial do projeto (copia `dist_altimeter_corrigido\extension.js` para `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.4\dist\extension.js`, atualiza metadados/registro na IDE e gera o `.vsix`). Como grava fora do workspace, rode com `BypassSandbox: true`:
 ```powershell
 node "./gerar_pacote.js"
 ```
@@ -176,7 +177,7 @@ Como este repositório é **público**, todo arquivo alterado e todo commit **DE
 1. **Erro `CreateProcessSecurityEnvironment`:**  
    Em ambientes Windows com sandboxing restrito, se o comando falhar com erro de criação de ambiente, utilize `BypassSandbox: true` mantendo o mesmo `toolSummary`.
 2. **Pacote `.vsix`:**  
-   O arquivo `medidortokens-0.1.3-agy2.6-fix.vsix` é um zip no padrão Open VSIX. O `gerar_pacote.js` monta o pacote com `zlib` nativo do Node.js (sem `archiver` e sem `vsce`).
+   O arquivo `medidortokens-0.1.4-agy2.6-fix.vsix` é um zip no padrão Open VSIX. O `gerar_pacote.js` monta o pacote com `zlib` nativo do Node.js (sem `archiver` e sem `vsce`).
 3. **Repositório Git:**  
    `https://github.com/rogeriocenteno/MedidorTokens` (público). Trabalhar sempre em `develop`; `main` só em marcos. Ver `Git_Rotina_Versionamento.md`. No sandbox, `git push` exige `BypassSandbox: true` (SSH).
 4. **Reload da IDE:**  

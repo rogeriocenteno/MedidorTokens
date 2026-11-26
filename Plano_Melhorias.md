@@ -1,10 +1,10 @@
 # Plano de Melhorias — Extensão MedidorTokens (Antigravity IDE 2.6.0+)
 
-**Versão atual:** `0.1.3` | **Identificador:** `rogeriocenteno.medidortokens` | **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
-**Data de criação do plano:** 28/10/2026 | **Última atualização:** 19/11/2026  
+**Versão atual:** `0.1.4` | **Identificador:** `rogeriocenteno.medidortokens` | **Autor / Mantenedor:** Rogério Centeno (`rogeriocenteno`)  
+**Data de criação do plano:** 28/10/2026 | **Última atualização:** 26/11/2026  
 **Fuso horário padrão do projeto:** `UTC-3` (`America/Sao_Paulo`)  
 **Idioma padrão da interface e documentação:** Português do Brasil (`pt-BR`)  
-**Arquivo-alvo principal:** `./dist_altimeter_corrigido/extension.js` (sincronizado pelo `gerar_pacote.js` com `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.3\dist\extension.js`)  
+**Arquivo-alvo principal:** `./dist_altimeter_corrigido/extension.js` (sincronizado pelo `gerar_pacote.js` com `%USERPROFILE%\.antigravity-ide\extensions\rogeriocenteno.medidortokens-0.1.4\dist\extension.js`)  
 **Pasta de backups e pacotes do projeto:** `./` (raiz do projeto)  
 **Repositório:** `https://github.com/rogeriocenteno/MedidorTokens` (**PÚBLICO** — branch de trabalho `develop`, releases em `main`)  
 **Open VSX Registry:** `https://open-vsx.org/extension/rogeriocenteno/medidortokens` | **Guia de Publicação:** `./dist_altimeter_corrigido/Pub_OpenVSX.md`
@@ -245,6 +245,16 @@
   2. **Normalização de Slugs e Regra Específica em `saSlugMap` / `at()`:** Mapeamento de `orchestrator (neon)`, `orchestrator-neon`, `gemini-pro-orchestrator-neon`, `gemini-4-neon-orchestrator` e `orchestrator (gemini 4 neon)`, além de verificação explícita `orchestrator && neon` antes da regra genérica de Argon em `at()`.
   3. **Integração de Cotas (`Gemini Models`):** Atualização de `_getQuotaGroup` e proteção em `_autoSyncQuotasFromIDE` para agrupar modelos contendo `neon` (sem `argon`) na cota **Gemini Models** (`5h / 7d`), mesmo quando contêm `orchestrator` no nome.
 
+---
+
+### Etapa 16: Unificação da Cota do Argon e Novos Modelos `Gemini 4 Carbon` / `Gemini 4 Hydrogen` (`v0.1.4`)
+- **Status:** ✅ Concluído
+- **Objetivo:** Adequar o painel de cotas à unificação do Argon dentro de **Gemini Models** (`5h / 7d`) no Antigravity IDE e adicionar suporte completo aos novos modelos **Gemini 4 Carbon**, **Gemini 4 Hydrogen** e variantes do **Orchestrator**.
+- **Implementações (`v0.1.4`):**
+  1. **Unificação da Cota do Argon em `Gemini Models`:** Atualização de `_getQuotaGroup` e `_autoSyncQuotasFromIDE` para agrupar `argon`, `carbon`, `hydrogen`, `neon` e `orchestrator` em `gemini` (`5h / 7d`), remoção do cartão separado `Gemini 4 Argon / Orchestrator`, remoção dos campos de Argon em `⚙ Cotas` / `saveQuotaRefs` / `_estimateLiveQuota` / `_computeWindowStats` e limpeza automática da chave legada `argon_7d` no `globalState`.
+  2. **Novos Modelos `Gemini 4 Carbon` e `Gemini 4 Hydrogen`:** Registro em `sa` das variantes `Extra`, `High`, `Medium`, `Low` e base para `Gemini 4 Carbon` (paleta índigo `#3730A3`–`#818CF8`, `order: 4.51`–`4.55`) e `Gemini 4 Hydrogen` (paleta teal `#0F766E`–`#5EEAD4`, `order: 4.61`–`4.65`), com normalização completa de slugs em `saSlugMap`.
+  3. **Novas Variantes do `Orchestrator`:** Registro de `Orchestrator (Carbon)` (`#4338CA`, `order: 0.6`) e `Orchestrator (Hydrogen)` (`#0D9488`, `order: 0.7`) com seus slugs e fallbacks dedicados em `at()`.
+
 
 ---
 
@@ -260,5 +270,5 @@ Ordem seguida na implantação das primeiras etapas (menor para maior impacto vi
 7. **Etapa 7** — Contador na Barra de Status inferior da IDE (`Status Bar`).
 8. **Etapa 8** — Filtro de período (8, 15, 30 dias, Tudo) e exportação CSV na janela de estatísticas.
 
-> **Observação:** Após concluir qualquer etapa, execute `node gerar_pacote.js` na pasta raiz do projeto (`./`) para sincronizar a extensão instalada e atualizar o instalador `medidortokens-0.1.3-agy2.6-fix.vsix`. Depois, versione em `develop` conforme `Git_Rotina_Versionamento.md` e, ao publicar nova versão no Open VSX Registry, siga `./dist_altimeter_corrigido/Pub_OpenVSX.md`.
+> **Observação:** Após concluir qualquer etapa, execute `node gerar_pacote.js` na pasta raiz do projeto (`./`) para sincronizar a extensão instalada e atualizar o instalador `medidortokens-0.1.4-agy2.6-fix.vsix`. Depois, versione em `develop` conforme `Git_Rotina_Versionamento.md` e, ao publicar nova versão no Open VSX Registry, siga `./dist_altimeter_corrigido/Pub_OpenVSX.md`.
 
